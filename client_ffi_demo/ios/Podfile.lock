@@ -1,0 +1,34 @@
+PODS:
+  - client_ffi_plugin (0.0.1):
+    - Flutter
+  - dart_rust_logger_plugin (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+  - log_test_plugin (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - client_ffi_plugin (from `.symlinks/plugins/client_ffi_plugin/ios`)
+  - dart_rust_logger_plugin (from `.symlinks/plugins/dart_rust_logger_plugin/ios`)
+  - Flutter (from `Flutter`)
+  - log_test_plugin (from `.symlinks/plugins/log_test_plugin/ios`)
+
+EXTERNAL SOURCES:
+  client_ffi_plugin:
+    :path: ".symlinks/plugins/client_ffi_plugin/ios"
+  dart_rust_logger_plugin:
+    :path: ".symlinks/plugins/dart_rust_logger_plugin/ios"
+  Flutter:
+    :path: Flutter
+  log_test_plugin:
+    :path: ".symlinks/plugins/log_test_plugin/ios"
+
+SPEC CHECKSUMS:
+  client_ffi_plugin: adabcf62464f83e82d6951d33d212bfed00edb36
+  dart_rust_logger_plugin: 809394a0776873536ca94adf706fb19e942556e6
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  log_test_plugin: e1700078d5c3cb3ffe6b9231727e12c085975a4c
+
+PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+
+COCOAPODS: 1.12.1
