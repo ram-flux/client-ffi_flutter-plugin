@@ -1,34 +1,35 @@
 PODS:
   - client_ffi_plugin (0.0.1):
     - Flutter
-  - dart_rust_logger_plugin (0.0.1):
-    - Flutter
   - Flutter (1.0.0)
-  - log_test_plugin (0.0.1):
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - permission_handler_apple (9.1.1):
     - Flutter
 
 DEPENDENCIES:
   - client_ffi_plugin (from `.symlinks/plugins/client_ffi_plugin/ios`)
-  - dart_rust_logger_plugin (from `.symlinks/plugins/dart_rust_logger_plugin/ios`)
   - Flutter (from `Flutter`)
-  - log_test_plugin (from `.symlinks/plugins/log_test_plugin/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
 
 EXTERNAL SOURCES:
   client_ffi_plugin:
     :path: ".symlinks/plugins/client_ffi_plugin/ios"
-  dart_rust_logger_plugin:
-    :path: ".symlinks/plugins/dart_rust_logger_plugin/ios"
   Flutter:
     :path: Flutter
-  log_test_plugin:
-    :path: ".symlinks/plugins/log_test_plugin/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
 
 SPEC CHECKSUMS:
   client_ffi_plugin: adabcf62464f83e82d6951d33d212bfed00edb36
-  dart_rust_logger_plugin: 809394a0776873536ca94adf706fb19e942556e6
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  log_test_plugin: e1700078d5c3cb3ffe6b9231727e12c085975a4c
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
 
-PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 
 COCOAPODS: 1.12.1
