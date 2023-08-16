@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    ClientFfiEntry.setup();
+    // ClientFfiEntry.setup();
 
     // DartRustLoggerEntry.setup();
   }

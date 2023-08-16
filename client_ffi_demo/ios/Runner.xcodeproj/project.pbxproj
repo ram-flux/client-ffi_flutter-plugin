@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		3371D9672A8C9921007940FB /* libclient_ffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3371D9662A8C9921007940FB /* libclient_ffi.a */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		476465050EFE978E0E10D2E3 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4197DA8574A0F93236F0BB /* Pods_Runner.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -33,6 +34,9 @@
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		2E4197DA8574A0F93236F0BB /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3371D9602A8C9830007940FB /* libclient_ffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libclient_ffi.a; sourceTree = "<group>"; };
+		3371D9642A8C9912007940FB /* Runner */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Runner; sourceTree = "<group>"; };
+		3371D9662A8C9921007940FB /* libclient_ffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libclient_ffi.a; path = Runner/ffi_files/libclient_ffi.a; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		52F18BF95DCB0E252354220C /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -54,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3371D9672A8C9921007940FB /* libclient_ffi.a in Frameworks */,
 				476465050EFE978E0E10D2E3 /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,6 +124,9 @@
 		EF3623BD370A1CEC333F124A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3371D9662A8C9921007940FB /* libclient_ffi.a */,
+				3371D9642A8C9912007940FB /* Runner */,
+				3371D9602A8C9830007940FB /* libclient_ffi.a */,
 				2E4197DA8574A0F93236F0BB /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
@@ -264,7 +272,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -357,11 +365,31 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = CH2RDAWNVA;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Runner/ffi_files",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"client_ffi\"",
+					"-framework",
+					"\"client_ffi_plugin\"",
+					"-framework",
+					"\"path_provider_foundation\"",
+					"-framework",
+					"\"permission_handler_apple\"",
+					"-force_load",
+					"/Users/gin/WorkSpace/RustProject/node/client-ffi_flutter-plugin/client_ffi_demo/ios/Runner/ffi_files/libclient_ffi.a",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.clientFfiDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -486,11 +514,31 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = CH2RDAWNVA;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Runner/ffi_files",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"client_ffi\"",
+					"-framework",
+					"\"client_ffi_plugin\"",
+					"-framework",
+					"\"path_provider_foundation\"",
+					"-framework",
+					"\"permission_handler_apple\"",
+					"-force_load",
+					"/Users/gin/WorkSpace/RustProject/node/client-ffi_flutter-plugin/client_ffi_demo/ios/Runner/ffi_files/libclient_ffi.a",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.clientFfiDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -509,11 +557,31 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
+				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = CH2RDAWNVA;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Runner/ffi_files",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"client_ffi\"",
+					"-framework",
+					"\"client_ffi_plugin\"",
+					"-framework",
+					"\"path_provider_foundation\"",
+					"-framework",
+					"\"permission_handler_apple\"",
+					"-force_load",
+					"/Users/gin/WorkSpace/RustProject/node/client-ffi_flutter-plugin/client_ffi_demo/ios/Runner/ffi_files/libclient_ffi.a",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.clientFfiDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
