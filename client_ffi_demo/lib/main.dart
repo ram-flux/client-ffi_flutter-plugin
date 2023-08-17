@@ -150,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final onDisconnected = ffi.Pointer.fromFunction<OnDisconnectedCallback>(
         Callbacks.onDisconnectedCallbackImpl);
     return clientFfiEntry.connect(
-        req, onConnected, onDisconnected, await _getAppDocDirectory());
+        req, onConnected, onDisconnected, await _getAppDocDirectory(), 0);
   }
 
   disconnect() {

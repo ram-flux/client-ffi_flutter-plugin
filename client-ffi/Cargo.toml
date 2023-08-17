@@ -44,3 +44,36 @@ boringtun = { git = "https://github.com/ram-flux/node.git", branch = "new-boring
 # flutter_rust_bridge_codegen = "=1.51.0"
 dart-bindgen = "0.1.7"
 cbindgen = "0.14.3"
+
+
+[profile.dev]
+codegen-units = 4
+debug = true
+debug-assertions = true
+incremental = true
+lto = false
+opt-level = 0
+overflow-checks = false
+panic = 'unwind'
+rpath = false
+
+[profile.release]
+codegen-units = 1
+debug = false
+debug-assertions = false
+incremental = false
+lto = "thin"
+opt-level = 3
+overflow-checks = false
+panic = 'unwind'
+rpath = false
+
+[profile.test]
+codegen-units = 16
+debug = true
+debug-assertions = true
+incremental = true
+lto = false
+opt-level = 0
+overflow-checks = true
+rpath = false

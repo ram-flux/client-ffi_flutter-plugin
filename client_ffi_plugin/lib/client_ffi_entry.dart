@@ -31,7 +31,8 @@ class ClientFfiEntry {
       ffi.Pointer<ffi.NativeFunction<OnConnectedCallback>> onConnectedCallback,
       ffi.Pointer<ffi.NativeFunction<OnDisconnectedCallback>>
           onDisconnectedCallback,
-      String path) {
+      String path,
+      int fd) {
     // final onConnectedCallback =
     //     ffi.Pointer.fromFunction<OnConnectedCallback>(onConnectedCallbackImpl);
     // final onDisconnectedCallback =
@@ -39,8 +40,8 @@ class ClientFfiEntry {
     //         onDisconnectedCallbackImpl);
     var pathPointer = path.toNativeUtf8();
     var reqPointer = req.toNativeUtf8();
-    final res = native.connect_to_node(
-        reqPointer, onConnectedCallback, onDisconnectedCallback, pathPointer);
+    final res = native.connect_to_node(reqPointer, onConnectedCallback,
+        onDisconnectedCallback, pathPointer, fd);
     return res.toDartString();
     // return "aaa";
   }

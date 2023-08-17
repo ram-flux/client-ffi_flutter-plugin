@@ -7,4 +7,6 @@ rustup target add aarch64-apple-ios x86_64-apple-ios
 cargo install cargo-lipo
 cargo lipo --release 
 
-cp ../target/universal/release/libclient_ffi.a  ../client-ffi_flutter-plugin/client_ffi_demo/ios
+cp -r ./target/universal/release/libclient_ffi.a   ../libs/ios/libclient_ffi.a
+
+cp ../libs/ios/libclient_ffi.a  ../client_ffi_demo/ios
