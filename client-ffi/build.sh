@@ -6,7 +6,7 @@ cargo install --force cbindgen
 # cp ./client-ffi.h ./client_ffi_plugin/lib
 
 rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
-cargo ndk -t armeabi-v7a -t arm64-v8a -o ../client-ffi_flutter-plugin/client_ffi_demo/android/app/src/main/jniLibs build --release
+cargo ndk -t armeabi-v7a -t arm64-v8a -o ../client_ffi_demo/android/app/src/main/jniLibs build --release
 
 
 # flutter_rust_bridge_codegen \
