@@ -1,0 +1,46 @@
+[package]
+name = "client-ffi"
+description = "ffi apis"
+version = "0.1.0"
+authors = ["Gin <wenjingq555@outlook.com>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+crate-type = ["staticlib", "cdylib"]
+name = "client_ffi"
+
+[dependencies]
+crossbeam-channel = "0.5.8"
+rand_core = { version = "0.6.3", features = ["getrandom"] }
+lazy_static = "1.4"
+tokio = { version = "1", features = ["full"] }
+tokio-stream = "0.1"
+tokio-util = { version = "0.7", features = ["codec"] }
+futures = "0.3.23"
+futures-util = "0.3.28"
+libc = "0.2.147"
+serde = "1"
+serde_derive = "1.0"
+serde_json = "1"
+
+dart-bindgen = "0.1.7"
+tracing = "0.1.31"
+tracing-appender = "0.2.1"
+tracing-error = "0.2.0"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+color-eyre = "0.6"
+toml = "0.7"
+
+allo-isolate = "0.1.6"
+log = "0.4.17"
+# regex = { git = "git@github.com:ram-flux/node.git", branch = "new-boringtun" }
+# [dependencies.boringtun]
+# version = "0.6.0"
+# features = ["device"]
+boringtun = { git = "https://github.com/ram-flux/node.git", branch = "new-boringtun" }
+
+[build-dependencies]
+# flutter_rust_bridge_codegen = "=1.51.0"
+dart-bindgen = "0.1.7"
+cbindgen = "0.14.3"
