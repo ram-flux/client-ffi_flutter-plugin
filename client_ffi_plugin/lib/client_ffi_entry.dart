@@ -16,7 +16,13 @@ class ClientFfiEntry {
     var pathPointer = path.toNativeUtf8();
     final completer = Completer<bool>();
     final sendPort = singleCompletePort(completer);
-    await native.add(sendPort.nativePort, 1, 2, pathPointer);
+    await native.add(1, 2);
+  }
+
+  String test(String str) {
+    var strPointer = str.toNativeUtf8();
+    final res = native.test(strPointer);
+    return res.toDartString();
   }
 
   // Future<bool> add() {
