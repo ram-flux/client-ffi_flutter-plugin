@@ -1,0 +1,32 @@
+{
+    "start_req": {
+        "type": "client",
+        "set_key_req": {
+            "prikey": "c4d6a712074a229f3f207fd39b87bf5ae20d106f7f679476ce73d3a6d408772e"
+        },
+        "assign_interface_req": {
+            "name": "utun",
+            "num": 200,
+            "native_external_ip": "220.200.5.244",
+            "ipv4": "157.148.69.2",
+            "ipv6": "fd86:ea04:1111::"
+        },
+        "add_transport_req": {
+            "port": 7777,
+            "protocol": "tcp",
+            "endpoint": "52.221.222.252:5173"
+        },
+        "add_network_segment_req": {
+            "segments": [
+                "0.0.0.0/0"
+            ]
+        },
+        "add_node_req": {
+            "pub_key": "b16e01d4adfdb906141612d62b45e85d7ff25cf5617923bda77141011cfc0e0b",
+            "endpoint": "52.221.222.252:5173",
+            "allowed_ips": [
+                "0.0.0.0/0"
+            ]
+        }
+    }
+}

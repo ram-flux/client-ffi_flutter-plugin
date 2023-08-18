@@ -1,5 +1,5 @@
 #!/bin/bash
-cargo install --force cbindgen
+# cargo install --force cbindgen
 
 
 # cbindgen --config cbindgen.toml --crate client-ffi --output ./client-ffi.h

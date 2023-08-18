@@ -7,7 +7,7 @@
 extern "C" {
 #endif // __cplusplus
 
-const char *add(int64_t port, uintptr_t left, uintptr_t right, const char *path);
+const char *add(uintptr_t left, uintptr_t right);
 
 const char *connect_to_node(const char *req,
                             void (*on_connected_callback)(const char *node_ptr, const char *error_message),
@@ -16,6 +16,8 @@ const char *connect_to_node(const char *req,
                             int fd);
 
 const char *disconnect(uint16_t port);
+
+const char *test(const char *str);
 
 #ifdef __cplusplus
 } // extern "C"

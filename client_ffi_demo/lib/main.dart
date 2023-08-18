@@ -115,30 +115,30 @@ class _MyHomePageState extends State<MyHomePage> {
                       "start_req":{
                           "type": "client",
                           "set_key_req": {
-                              "prikey": "145c46d72ea427ba2875fabdfc8b97bb403caccb1313141079212fdc8844d9e3"
+                              "prikey": "8244dfe5d96b70af1171e5083fe7381f582d21a6c9fe7f0ef3412025832b0668"
                           },
                           "assign_interface_req": {
                               "name": "utun",
                               "num": 100,
                               "native_external_ip": "220.200.5.244",
-                              "ipv4": "10.77.0.2",
+                              "ipv4": "157.148.69.1",
                               "ipv6": "fd86:ea04:1111::"
                           },
                           "add_transport_req": {
                               "port": 5173,
-                              "protocol": "websocket",
+                              "protocol": "tcp",
                               "endpoint": "52.221.222.252:5173"
                           },
                           "add_network_segment_req": {
                               "segments": [
-                                  "142.250.204.100/32"
+                                  "0.0.0.0/0"
                               ]
                           },
                           "add_node_req": {
-                              "pub_key": "ee86c9a522e28f5299ad2f560db0174a2d4b0c67aedb90ed7defbc7afbf05e23",
+                              "pub_key": "b16e01d4adfdb906141612d62b45e85d7ff25cf5617923bda77141011cfc0e0b",
                               "endpoint": "52.221.222.252:5173",
                               "allowed_ips": [
-                                  "142.250.204.100/32"
+                                  "0.0.0.0/0"
                               ]
                           }
                       }

@@ -4,7 +4,7 @@ rustup target add aarch64-apple-ios x86_64-apple-ios
 
  
 # Install cargo-lipo to generate the iOS universal library
-cargo install cargo-lipo
+# cargo install cargo-lipo
 cargo lipo --release 
 
 cp -r ./target/universal/release/libclient_ffi.a   ../libs/ios/libclient_ffi.a

@@ -28,17 +28,29 @@ macro_rules! runtime {
 }
 
 #[no_mangle]
-pub extern "C" fn add(port: i64, left: usize, right: usize, path: *const c_char) -> *const c_char {
-    let rt = runtime!();
-    let path = unsafe { std::ffi::CStr::from_ptr(path) }.to_str().unwrap();
+pub extern "C" fn add(left: usize, right: usize) -> *const c_char {
+    // let path = unsafe { std::ffi::CStr::from_ptr(path) }.to_str().unwrap();
     // let t = Isolate::new(port).task(loopping());
     // rt.spawn(t);
-    let res = _init_log("debug", path);
+    // let res = _init_log("debug", path);
 
     // left + right
-    std::ffi::CString::new(format!("res: {res:?}"))
+    std::ffi::CString::new(format!("left + right: {:?}", left + right))
         .unwrap()
         .into_raw()
+}
+
+#[no_mangle]
+pub extern "C" fn test(str: *const c_char) -> *const c_char {
+    std::ffi::CString::new(format!(
+        "str: {:?} ----- {:?}",
+        str,
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+    ))
+    .unwrap()
+    .into_raw()
 }
 
 async fn loopping() {

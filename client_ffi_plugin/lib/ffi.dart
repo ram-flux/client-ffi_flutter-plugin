@@ -16,25 +16,19 @@ DynamicLibrary _open() {
 
 /// C function `add`.
 Pointer<ffi.Utf8> add(
-  int port,
   int left,
   int right,
-  Pointer<ffi.Utf8> path,
 ) {
-  return _add(port, left, right, path);
+  return _add(left, right);
 }
 final _add_Dart _add = _dl.lookupFunction<_add_C, _add_Dart>('add');
 typedef _add_C = Pointer<ffi.Utf8> Function(
-  Int32 port,
   Int32 left,
   Int32 right,
-  Pointer<ffi.Utf8> path,
 );
 typedef _add_Dart = Pointer<ffi.Utf8> Function(
-  int port,
   int left,
   int right,
-  Pointer<ffi.Utf8> path,
 );
 
 /// C function `connect_to_node`.
@@ -89,4 +83,18 @@ typedef _store_dart_post_cobject_C = Void Function(
 );
 typedef _store_dart_post_cobject_Dart = void Function(
   Pointer<NativeFunction<Int8 Function(Int64, Pointer<Dart_CObject>)>> ptr,
+);
+
+/// C function `test`.
+Pointer<ffi.Utf8> test(
+  Pointer<ffi.Utf8> str,
+) {
+  return _test(str);
+}
+final _test_Dart _test = _dl.lookupFunction<_test_C, _test_Dart>('test');
+typedef _test_C = Pointer<ffi.Utf8> Function(
+  Pointer<ffi.Utf8> str,
+);
+typedef _test_Dart = Pointer<ffi.Utf8> Function(
+  Pointer<ffi.Utf8> str,
 );
