@@ -122,7 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               "num": 100,
                               "native_external_ip": "220.200.5.244",
                               "ipv4": "157.148.69.1",
-                              "ipv6": "fd86:ea04:1111::"
+                              "ipv6": "fd86:ea04:1111::",
+                              "fd": 0
                           },
                           "add_transport_req": {
                               "port": 5173,
@@ -150,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final onDisconnected = ffi.Pointer.fromFunction<OnDisconnectedCallback>(
         Callbacks.onDisconnectedCallbackImpl);
     return clientFfiEntry.connect(
-        req, onConnected, onDisconnected, await _getAppDocDirectory(), 0);
+        req, onConnected, onDisconnected, await _getAppDocDirectory());
   }
 
   disconnect() {

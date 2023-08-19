@@ -37,9 +37,8 @@ Pointer<ffi.Utf8> connect_to_node(
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_connected_callback,
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_disconnected_callback,
   Pointer<ffi.Utf8> path,
-  int fd,
 ) {
-  return _connect_to_node(req, on_connected_callback, on_disconnected_callback, path, fd);
+  return _connect_to_node(req, on_connected_callback, on_disconnected_callback, path);
 }
 final _connect_to_node_Dart _connect_to_node = _dl.lookupFunction<_connect_to_node_C, _connect_to_node_Dart>('connect_to_node');
 typedef _connect_to_node_C = Pointer<ffi.Utf8> Function(
@@ -47,14 +46,12 @@ typedef _connect_to_node_C = Pointer<ffi.Utf8> Function(
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_connected_callback,
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_disconnected_callback,
   Pointer<ffi.Utf8> path,
-  Int32 fd,
 );
 typedef _connect_to_node_Dart = Pointer<ffi.Utf8> Function(
   Pointer<ffi.Utf8> req,
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_connected_callback,
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_disconnected_callback,
   Pointer<ffi.Utf8> path,
-  int fd,
 );
 
 /// C function `disconnect`.

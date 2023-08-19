@@ -9,7 +9,8 @@
             "num": 100,
             "native_external_ip": "220.200.5.244",
             "ipv4": "157.148.69.3",
-            "ipv6": "fd86:ea04:1111::"
+            "ipv6": "fd86:ea04:1111::",
+            "fd": 0
         },
         "add_transport_req": {
             "port": 7777,

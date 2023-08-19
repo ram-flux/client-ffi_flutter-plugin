@@ -56,7 +56,6 @@ pub extern "C" fn connect_to_node(
     on_connected_callback: extern "C" fn(node_ptr: *const c_char, error_message: *const c_char),
     on_disconnected_callback: extern "C" fn(node_ptr: *const c_char, error_message: *const c_char),
     path: *const c_char,
-    fd: std::os::raw::c_int,
 ) -> *const c_char {
     // let config = crate::config::Config::init("./config.toml");
     // let _ = _init_log(config.log_level.as_str());
