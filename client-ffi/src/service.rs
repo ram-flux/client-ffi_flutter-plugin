@@ -43,7 +43,7 @@ impl ConnectReq {
             error_message: *const c_char,
         ),
     ) -> *const c_char {
-        log::info!("[connect] generate processor tx ..........");
+        println!("[connect] generate processor tx ..........");
         // 获取发送者
         // tracing_subscriber::fmt()
         //     .pretty()
@@ -87,9 +87,9 @@ impl ConnectReq {
                 //     }
                 //     None => std::ptr::null(),
                 // };
-                let node = serde_json::to_string(&response.data).unwrap();
-                let node = CString::new(node).unwrap();
-                let node = node.into_raw();
+                let node = serde_json::to_string(&response.data).unwrap_or_default();
+                let cstr_node = CString::new(node).unwrap();
+                let node = cstr_node.into_raw();
                 on_connected_callback(node, std::ptr::null());
                 println!("[connect] connect success");
                 std::thread::spawn(move || {
@@ -102,8 +102,7 @@ impl ConnectReq {
                     })
                 });
 
-                let res = CString::new("ok").unwrap();
-                res.into_raw()
+                node
                 // FfiResult::new(c_node_ptr as *const libc::c_void, 0, None)
             }
             _ => {
@@ -111,8 +110,7 @@ impl ConnectReq {
                 let error_message = CString::new(err.clone()).expect("CString::new failed");
                 let error_message_ptr = error_message.as_ptr();
                 on_disconnected_callback(std::ptr::null(), error_message_ptr);
-                let res = CString::new("err").unwrap();
-                res.into_raw()
+                error_message_ptr
                 // FfiResult::new(std::ptr::null(), 0, Some(err.as_str()))
             }
         }

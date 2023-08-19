@@ -1,7 +1,3 @@
-use boringtun::x25519::{PublicKey, StaticSecret};
-
-use allo_isolate::Isolate;
-use rand_core::OsRng;
 use std::os::raw::c_char;
 
 // use crate::{cnode::CNode, ffi_result::FfiResult};
@@ -42,6 +38,7 @@ pub extern "C" fn add(left: usize, right: usize) -> *const c_char {
 
 #[no_mangle]
 pub extern "C" fn test(str: *const c_char) -> *const c_char {
+    println!("[test] start test");
     std::ffi::CString::new(format!(
         "str: {:?} ----- {:?}",
         str,
@@ -51,12 +48,6 @@ pub extern "C" fn test(str: *const c_char) -> *const c_char {
     ))
     .unwrap()
     .into_raw()
-}
-
-async fn loopping() {
-    log::debug!("DEBUG lopppppppppp");
-    println!("ahahhaah");
-    // loop {}
 }
 
 #[no_mangle]
@@ -69,6 +60,8 @@ pub extern "C" fn connect_to_node(
 ) -> *const c_char {
     // let config = crate::config::Config::init("./config.toml");
     // let _ = _init_log(config.log_level.as_str());
+    println!("[connect_to_node] get path");
+
     let path = unsafe { std::ffi::CStr::from_ptr(path) }.to_str().unwrap();
     println!("[connect_to_node] start");
 

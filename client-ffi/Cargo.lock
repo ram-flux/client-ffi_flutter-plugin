@@ -406,7 +406,6 @@ dependencies = [
  "futures-util",
  "lazy_static",
  "libc",
- "log",
  "rand_core",
  "serde",
  "serde_derive",

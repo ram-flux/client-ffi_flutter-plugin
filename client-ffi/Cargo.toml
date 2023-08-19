@@ -33,7 +33,6 @@ color-eyre = "0.6"
 toml = "0.7"
 
 allo-isolate = "0.1.6"
-log = "0.4.17"
 # regex = { git = "git@github.com:ram-flux/node.git", branch = "new-boringtun" }
 # [dependencies.boringtun]
 # version = "0.6.0"
