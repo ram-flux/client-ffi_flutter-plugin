@@ -1,6 +1,5 @@
 use std::{ffi::CString, os::raw::c_char};
 
-use allo_isolate::Isolate;
 use boringtun::{processor, rpc::http_server::ffi_callback};
 use serde::Deserialize;
 
