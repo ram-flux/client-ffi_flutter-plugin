@@ -10,6 +10,8 @@ lazy_static::lazy_static! {
         .build();
 }
 
+pub static LOG_INIT: once_cell::sync::OnceCell<()> = once_cell::sync::OnceCell::new();
+
 macro_rules! runtime {
     () => {
         match RUNTIME.as_ref() {
@@ -63,8 +65,10 @@ pub extern "C" fn connect_to_node(
 
     let path = unsafe { std::ffi::CStr::from_ptr(path) }.to_str().unwrap();
     println!("[connect_to_node] start");
-
-    let _ = _init_log("debug", path);
+    LOG_INIT.get_or_init(|| {
+        let _ = _init_log("debug", path);
+    });
+    // let _ = _init_log("debug", path);
     // 将参数转换为 Rust 字符串
     println!("[connect_to_node] init tracing log");
     let connect_req: crate::service::ConnectReq =
@@ -76,12 +80,14 @@ pub extern "C" fn connect_to_node(
             Ok(req) => serde_json::from_str(req).unwrap(),
         };
     connect_req.connect(on_connected_callback, on_disconnected_callback)
+    // crate::ffi_result::to_c_string("aaa")
 }
 
 #[no_mangle]
 pub unsafe extern "C" fn disconnect(port: u16) -> *const c_char {
-    let rt = runtime!();
-    rt.block_on(async move { crate::service::disconnect(port).await })
+    // let rt = runtime!();
+    // rt.block_on(async move { crate::service::disconnect(port).await })
+    crate::service::disconnect(port)
 }
 
 fn _init_log(level: &str, path: &str) {

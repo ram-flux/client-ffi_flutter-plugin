@@ -20,9 +20,8 @@ tokio-util = { version = "0.7", features = ["codec"] }
 futures = "0.3.23"
 futures-util = "0.3.28"
 libc = "0.2.147"
-serde = "1"
-serde_derive = "1.0"
 serde_json = "1"
+serde = { version = "1", features = ["derive"] }
 
 dart-bindgen = "0.1.7"
 tracing = "0.1.31"
@@ -31,8 +30,13 @@ tracing-error = "0.2.0"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 color-eyre = "0.6"
 toml = "0.7"
+thiserror = { version = "1" }
+anyhow = "1"
 
 allo-isolate = "0.1.6"
+
+once_cell = { version = "1", default-features = false }
+
 # regex = { git = "git@github.com:ram-flux/node.git", branch = "new-boringtun" }
 # [dependencies.boringtun]
 # version = "0.6.0"

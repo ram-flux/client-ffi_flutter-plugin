@@ -1,4 +1,7 @@
+import 'dart:async';
+import 'dart:ffi';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:client_ffi_plugin/client_ffi_entry.dart';
 // import 'package:dart_rust_logger_plugin/dart_rust_logger_entry.dart';
@@ -6,6 +9,8 @@ import 'package:ffi/ffi.dart';
 import 'package:flutter/material.dart';
 import 'dart:ffi' as ffi;
 import 'package:path_provider/path_provider.dart';
+
+import 'ISOManager.dart';
 
 // import 'package:log_test_plugin/log_test_entry.dart';
 
@@ -82,6 +87,16 @@ class Callbacks {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   static ClientFfiEntry clientFfiEntry = ClientFfiEntry();
+
+  // 1.1 create a isolate
+  Isolate? isolate;
+
+  // 1.2 A receiver of Main Isolate
+  ReceivePort? mainIsolateReceivePort;
+
+  // 1.3 A receiver of Other Isolate的发送器
+  SendPort? otherIsolateSendPort;
+
   // static DartRustLoggerEntry dartRustLoggerEntry = DartRustLoggerEntry();
   // static LogTestEntry logTestEntry = LogTestEntry();
   void _incrementCounter() {
@@ -104,12 +119,169 @@ class _MyHomePageState extends State<MyHomePage> {
     // DartRustLoggerEntry.setup();
   }
 
-  Future<String> _getAppDocDirectory() async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    return directory.path;
+  void spawnNewIsolate() async {
+    // 2.1 create a receiver to receive the receiver that sent from Main Isolate
+    if (mainIsolateReceivePort == null) {
+      mainIsolateReceivePort = ReceivePort();
+    }
+    try {
+      if (isolate == null) {
+        //2.2 send the Main Isolate sender to the new isolate
+        // isolate =
+        //     await Isolate.spawn(initClient, mainIsolateReceivePort?.sendPort);
+        isolate = await Isolate.spawn((sendPort) {
+          ReceivePort receivePort = ReceivePort();
+          sendPort?.send(receivePort.sendPort);
+          // SmartDialog.compatible.showToast("点击按钮2");
+          receivePort.listen((message) async {
+            print("the value is $message sent from main isolate");
+            String req = '''
+                  {
+                      "start_req":{
+                          "type": "client",
+                          "set_key_req": {
+                              "prikey": "8244dfe5d96b70af1171e5083fe7381f582d21a6c9fe7f0ef3412025832b0668"
+                          },
+                          "assign_interface_req": {
+                              "name": "utun",
+                              "num": 100,
+                              "native_external_ip": "220.200.5.244",
+                              "ipv4": "157.148.69.1",
+                              "ipv6": "fd86:ea04:1111::",
+                              "fd": 0
+                          },
+                          "add_transport_req": {
+                              "port": 5173,
+                              "protocol": "tcp",
+                              "endpoint": "52.221.222.252:5173"
+                          },
+                          "add_network_segment_req": {
+                              "segments": [
+                                  "0.0.0.0/0"
+                              ]
+                          },
+                          "add_node_req": {
+                              "pub_key": "b16e01d4adfdb906141612d62b45e85d7ff25cf5617923bda77141011cfc0e0b",
+                              "endpoint": "52.221.222.252:5173",
+                              "allowed_ips": [
+                                  "0.0.0.0/0"
+                              ]
+                          }
+                      }
+                  }
+                  ''';
+            final onConnected = ffi.Pointer.fromFunction<OnConnectedCallback>(
+                Callbacks.onConnectedCallbackImpl);
+
+            final onDisconnected =
+                ffi.Pointer.fromFunction<OnDisconnectedCallback>(
+                    Callbacks.onDisconnectedCallbackImpl);
+            Directory directory = await getApplicationDocumentsDirectory();
+
+            String res = clientFfiEntry.connect(
+                req, onConnected, onDisconnected, directory.path);
+
+            // print("init client sent $msg ");
+            print("something wrong");
+            sendPort?.send(res);
+          });
+        }, mainIsolateReceivePort?.sendPort);
+
+        // 2.3 Main Isolate receives the messages from the new isolate through receiver
+        mainIsolateReceivePort?.listen((message) {
+          if (message is SendPort) {
+            // 2.4 if it is a sender that isolate sent, then main isolate can send value
+            // to the isolate through the sender(at this moment two-way communicator was established)
+            otherIsolateSendPort = message;
+            otherIsolateSendPort?.send(1);
+            print(
+                "two-way communicator was established, main isolate send initial value 1");
+          } else {
+            // 2.5 if the new isolate send a value, we could know that it is the result for calculation
+            print("new isolate calculate the result $message");
+          }
+        });
+      } else {
+        // 2.6 reuse otherIsolateSendPort
+        if (otherIsolateSendPort != null) {
+          otherIsolateSendPort?.send(2);
+          print(
+              "two-way communicator reuse, main isolate send initial value 2");
+        }
+      }
+    } catch (e) {
+      print("catch error $e");
+    }
   }
 
-  connect() async {
+  static initClient(SendPort? sendPort) async {
+    ReceivePort receivePort = ReceivePort();
+    sendPort?.send(receivePort.sendPort);
+    // SmartDialog.compatible.showToast("点击按钮2");
+    receivePort.listen((message) async {
+      print("the value is $message sent from main isolate");
+      String req = '''
+                  {
+                      "start_req":{
+                          "type": "client",
+                          "set_key_req": {
+                              "prikey": "8244dfe5d96b70af1171e5083fe7381f582d21a6c9fe7f0ef3412025832b0668"
+                          },
+                          "assign_interface_req": {
+                              "name": "utun",
+                              "num": 100,
+                              "native_external_ip": "220.200.5.244",
+                              "ipv4": "157.148.69.1",
+                              "ipv6": "fd86:ea04:1111::",
+                              "fd": 0
+                          },
+                          "add_transport_req": {
+                              "port": 5173,
+                              "protocol": "tcp",
+                              "endpoint": "52.221.222.252:5173"
+                          },
+                          "add_network_segment_req": {
+                              "segments": [
+                                  "0.0.0.0/0"
+                              ]
+                          },
+                          "add_node_req": {
+                              "pub_key": "b16e01d4adfdb906141612d62b45e85d7ff25cf5617923bda77141011cfc0e0b",
+                              "endpoint": "52.221.222.252:5173",
+                              "allowed_ips": [
+                                  "0.0.0.0/0"
+                              ]
+                          }
+                      }
+                  }
+                  ''';
+      final onConnected = ffi.Pointer.fromFunction<OnConnectedCallback>(
+          Callbacks.onConnectedCallbackImpl);
+
+      final onDisconnected = ffi.Pointer.fromFunction<OnDisconnectedCallback>(
+          Callbacks.onDisconnectedCallbackImpl);
+      Directory directory = await getApplicationDocumentsDirectory();
+
+      String res = clientFfiEntry.connect(
+          req, onConnected, onDisconnected, directory.path);
+
+      // print("init client sent $msg ");
+      print("something wrong");
+      sendPort?.send(res);
+    });
+    //print(response.data);
+  }
+
+  Future<String> start_isolate_connect() async {
+    // String path = await _getAppDocDirectory();
+    String res = await ISOManager.loadBalanceFuture<String, String>(
+        isolate_connect,
+        "/data/user/0/com.example.client_ffi_demo/app_flutter");
+    print("wooow????");
+    return res;
+  }
+
+  static FutureOr<String> isolate_connect(String path) async {
     String req = '''
                   {
                       "start_req":{
@@ -150,13 +322,73 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final onDisconnected = ffi.Pointer.fromFunction<OnDisconnectedCallback>(
         Callbacks.onDisconnectedCallbackImpl);
-    return clientFfiEntry.connect(
-        req, onConnected, onDisconnected, await _getAppDocDirectory());
+    Directory directory = await getApplicationDocumentsDirectory();
+    String res = await clientFfiEntry.connect(
+        req, onConnected, onDisconnected, directory.path);
+    print("chatClient start");
+    return res;
   }
 
-  disconnect() {
+  // isolate_connect() async {
+  //   ReceivePort receivePort = ReceivePort();
+  //   await Isolate.spawn(initClient, receivePort.sendPort);
+  // }
+
+  Future<String> _getAppDocDirectory() async {
+    Directory directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  String connect(String path) {
+    String req = '''
+                  {
+                      "start_req":{
+                          "type": "client",
+                          "set_key_req": {
+                              "prikey": "8244dfe5d96b70af1171e5083fe7381f582d21a6c9fe7f0ef3412025832b0668"
+                          },
+                          "assign_interface_req": {
+                              "name": "utun",
+                              "num": 100,
+                              "native_external_ip": "220.200.5.244",
+                              "ipv4": "157.148.69.1",
+                              "ipv6": "fd86:ea04:1111::",
+                              "fd": 0
+                          },
+                          "add_transport_req": {
+                              "port": 5173,
+                              "protocol": "tcp",
+                              "endpoint": "52.221.222.252:5173"
+                          },
+                          "add_network_segment_req": {
+                              "segments": [
+                                  "0.0.0.0/0"
+                              ]
+                          },
+                          "add_node_req": {
+                              "pub_key": "b16e01d4adfdb906141612d62b45e85d7ff25cf5617923bda77141011cfc0e0b",
+                              "endpoint": "52.221.222.252:5173",
+                              "allowed_ips": [
+                                  "0.0.0.0/0"
+                              ]
+                          }
+                      }
+                  }
+                  ''';
+    final onConnected = ffi.Pointer.fromFunction<OnConnectedCallback>(
+        Callbacks.onConnectedCallbackImpl);
+
+    final onDisconnected = ffi.Pointer.fromFunction<OnDisconnectedCallback>(
+        Callbacks.onDisconnectedCallbackImpl);
+    var res = clientFfiEntry.connect(req, onConnected, onDisconnected, path);
+
+    return res;
+  }
+
+  String disconnect() {
     var res = clientFfiEntry.disconnect(5173);
     print("result: ${res}");
+    return res;
   }
 
   // static FutureOr<bool> add_future(bool i) async {
@@ -197,13 +429,28 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisCount: 5,
             children: [
               ElevatedButton(
-                  onPressed: () {
-                    final res = connect();
+                  onPressed: () async {
+                    //"/data/user/0/com.example.client_ffi_demo/app_flutter"
+                    String path = await _getAppDocDirectory();
+                    final res = connect(path);
                     print("connect: $res");
                   },
                   child: const Text("连接")),
               ElevatedButton(
                   onPressed: () async {
+                    final info = await start_isolate_connect();
+                    print("start_chat_client res: $info");
+                  },
+                  child: const Text("isolate连接")),
+              ElevatedButton(
+                  onPressed: () async {
+                    spawnNewIsolate();
+                    print("spawnNewIsolate");
+                  },
+                  child: const Text("spawnNewIsolate")),
+
+              ElevatedButton(
+                  onPressed: () {
                     final res = disconnect();
                     print("disconnect: $res");
                   },

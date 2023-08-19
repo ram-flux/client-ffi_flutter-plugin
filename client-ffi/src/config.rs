@@ -1,4 +1,4 @@
-#[derive(serde_derive::Deserialize, Debug, Clone)]
+#[derive(serde::Deserialize, Debug, Clone)]
 pub struct Config {
     pub log_level: String,
     // pub kafka: Kafka,

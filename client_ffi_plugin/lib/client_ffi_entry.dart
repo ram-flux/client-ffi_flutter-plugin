@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:ffi' as ffi;
+import 'dart:io';
 
 import 'package:ffi/ffi.dart';
 import 'package:isolate/ports.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'ffi.dart' as native;
 
@@ -38,17 +40,22 @@ class ClientFfiEntry {
       ffi.Pointer<ffi.NativeFunction<OnDisconnectedCallback>>
           onDisconnectedCallback,
       String path) {
+    // Directory directory = await getApplicationDocumentsDirectory();
+
     // final onConnectedCallback =
     //     ffi.Pointer.fromFunction<OnConnectedCallback>(onConnectedCallbackImpl);
     // final onDisconnectedCallback =
     //     ffi.Pointer.fromFunction<OnDisconnectedCallback>(
     //         onDisconnectedCallbackImpl);
+    final completer = Completer<String>();
+    final sendPort = singleCompletePort(completer);
     var pathPointer = path.toNativeUtf8();
     var reqPointer = req.toNativeUtf8();
-    final res = native.connect_to_node(reqPointer, onConnectedCallback,
-        onDisconnectedCallback, pathPointer);
+    final res = native.connect_to_node(
+        reqPointer, onConnectedCallback, onDisconnectedCallback, pathPointer);
+
+    // return completer.future;
     return res.toDartString();
-    // return "aaa";
   }
 
   String disconnect(int port) {

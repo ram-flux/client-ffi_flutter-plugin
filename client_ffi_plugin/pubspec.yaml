@@ -13,6 +13,7 @@ dependencies:
   plugin_platform_interface: ^2.0.2
   ffi: ^2.0.0
   isolate: ^2.1.1
+  path_provider: ^2.1.0
 
 
 dev_dependencies:

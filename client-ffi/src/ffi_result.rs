@@ -1,89 +1,85 @@
 use std::ffi::{CStr, CString};
 
-#[repr(C)]
-#[derive(PartialEq, Eq, Debug)]
-/// Indicates the operation required from the caller
-pub enum ResultType {
-    /// No operation is required.
-    FfiDone = 0,
-    /// Some error occurred, no operation is required. Size indicates error code.
-    FfiError = 1,
-}
-
-/// The return type of functions
-#[repr(C)]
-#[derive(Debug)]
-pub struct FfiResult {
-    /// The operation to be performed by the caller
-    pub op: ResultType,
+use libc::c_char;
+#[derive(Debug, serde::Serialize)]
+pub struct FfiResult<T: serde::Serialize> {
     /// Additional information, required to perform the operation
-    pub data: *const libc::c_void,
-    pub data_len: usize,
-    pub error: *const libc::c_char,
-    pub error_len: usize,
+    pub code: u32,
+    #[serde(rename = "type")]
+    typ: String,
+    pub message: String,
+    pub data: Option<T>,
 }
 
-pub trait FfiData {
-    // 定义 trait 方法
-    fn as_raw_ptr(&self) -> *const libc::c_void;
+impl<T: serde::Serialize> FfiResult<T> {
+    pub(crate) fn to_c_string(self) -> *const c_char {
+        to_c_string(&self.to_string())
+    }
 }
 
-impl FfiResult {
-    pub fn new(
-        data: *const libc::c_void,
-        data_len: usize,
-        error_message: Option<&str>,
-    ) -> FfiResult {
-        let (op, error, error_len) = match error_message {
-            Some(message) => (ResultType::FfiError, Some(message), message.len()),
-            None => (ResultType::FfiDone, None, 0),
-        };
-
+impl<T> From<boringtun::rpc::http_server::response_v2::Response<T>> for FfiResult<T>
+where
+    T: serde::Serialize + Sized,
+{
+    fn from(value: boringtun::rpc::http_server::response_v2::Response<T>) -> Self {
         FfiResult {
-            op,
-            data,
-            data_len,
-            error: error.map(to_c_string).unwrap_or(std::ptr::null()),
-            error_len,
+            data: value.data,
+            message: value.message,
+            code: value.code,
+            typ: "value".to_owned(),
         }
     }
 }
 
-#[repr(C)]
-#[derive(Debug, PartialEq)]
-pub struct FfiError {
-    pub(crate) message: *const libc::c_char,
-}
-
-impl FfiError {
-    pub fn new(message: &str) -> FfiError {
-        let c_string = CString::new(message).expect("CString::new failed");
-        let c_string_ptr = c_string.into_raw();
-        FfiError {
-            message: c_string_ptr,
-        }
-    }
-
-    // 辅助函数，用于创建没有错误消息的 FfiError 实例
-    pub fn no_error() -> FfiError {
-        FfiError {
-            message: std::ptr::null(),
-        }
-    }
-
-    pub fn get_message(&self) -> String {
-        // 判断指针是否为空
-        if self.message.is_null() {
-            return String::new();
-        }
-
-        // 使用CStr将指针转换为Rust字符串，然后将其转换为String类型
-        let c_str = unsafe { CStr::from_ptr(self.message) };
-        let rust_str = c_str.to_str().unwrap_or("Invalid UTF-8");
-
-        rust_str.to_string()
+impl<T: serde::Serialize> ToString for FfiResult<T> {
+    fn to_string(&self) -> String {
+        serde_json::to_string(self).unwrap()
     }
 }
+
+impl<T> From<T> for FfiResult<T>
+where
+    T: serde::Serialize + Sized,
+{
+    fn from(msg: T) -> Self {
+        Self {
+            code: 200,
+            typ: "success".to_string(),
+            message: String::new(),
+            data: Some(msg),
+        }
+    }
+}
+
+impl<T> From<Result<T, crate::ffi_error::Error>> for FfiResult<T>
+where
+    T: serde::Serialize + Sized,
+{
+    fn from(res: Result<T, crate::ffi_error::Error>) -> Self {
+        match res {
+            Ok(ok) => ok.into(),
+            Err(err) => {
+                let (code, typ, message) = err.into();
+                FfiResult {
+                    code,
+                    typ,
+                    message,
+                    data: None,
+                }
+            }
+        }
+    }
+}
+
+impl<T: serde::Serialize> From<FfiResult<T>> for *const c_char {
+    fn from(value: FfiResult<T>) -> Self {
+        let res = serde_json::to_string(&value).unwrap();
+        let res = CString::new(res).expect("CString::new failed");
+        res.as_ptr()
+    }
+}
+
+// impl FfiResult<>
 
 // 辅助函数，用于将 Rust 字符串转换为 C 字符串
 pub(crate) fn to_c_string(s: &str) -> *const libc::c_char {

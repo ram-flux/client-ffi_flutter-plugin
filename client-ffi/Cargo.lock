@@ -397,6 +397,7 @@ name = "client-ffi"
 version = "0.1.0"
 dependencies = [
  "allo-isolate",
+ "anyhow",
  "boringtun",
  "cbindgen",
  "color-eyre",
@@ -406,10 +407,11 @@ dependencies = [
  "futures-util",
  "lazy_static",
  "libc",
+ "once_cell",
  "rand_core",
  "serde",
- "serde_derive",
  "serde_json",
+ "thiserror",
  "tokio",
  "tokio-stream",
  "tokio-util",
