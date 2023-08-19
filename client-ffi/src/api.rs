@@ -70,10 +70,11 @@ pub extern "C" fn connect_to_node(
     // let config = crate::config::Config::init("./config.toml");
     // let _ = _init_log(config.log_level.as_str());
     let path = unsafe { std::ffi::CStr::from_ptr(path) }.to_str().unwrap();
+    println!("[connect_to_node] start");
 
     let _ = _init_log("debug", path);
     // 将参数转换为 Rust 字符串
-    println!("[connect_to_node]");
+    println!("[connect_to_node] init tracing log");
     let connect_req: crate::service::ConnectReq =
         match unsafe { std::ffi::CStr::from_ptr(req) }.to_str() {
             Err(e) => {

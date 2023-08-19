@@ -43,7 +43,7 @@ impl ConnectReq {
             error_message: *const c_char,
         ),
     ) -> *const c_char {
-        log::info!("connect..........");
+        log::info!("[connect] generate processor tx ..........");
         // 获取发送者
         // tracing_subscriber::fmt()
         //     .pretty()
@@ -66,7 +66,7 @@ impl ConnectReq {
         let response = match ffi_receiver.recv() {
             Ok(response) => response,
             Err(e) => {
-                println!("[client_start] error: {e}");
+                println!("[connect] error: {e}");
                 let res = CString::new(format!("ffi receive error: {e}")).unwrap();
                 return res.into_raw();
                 // return FfiResult::new(
@@ -91,7 +91,7 @@ impl ConnectReq {
                 let node = CString::new(node).unwrap();
                 let node = node.into_raw();
                 on_connected_callback(node, std::ptr::null());
-
+                println!("[connect] connect success");
                 std::thread::spawn(move || {
                     let rt = tokio::runtime::Builder::new_multi_thread()
                         .enable_all()
