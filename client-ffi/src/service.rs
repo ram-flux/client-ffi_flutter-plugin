@@ -122,3 +122,29 @@ pub fn disconnect(port: u16) -> *const c_char {
     };
     Into::<FfiResult<processor::node::Node>>::into(response).to_c_string()
 }
+
+pub fn log(log_callback: extern "C" fn(msg: *const c_char)) {
+    let (ffi_sender, ffi_receiver) = crossbeam_channel::unbounded::<String>();
+    let collect_tx = processor::processor_tx_generator();
+    // let (callback_sender, callback_recv) = crossbeam_channel::unbounded::<String>();
+    collect_tx.send(boringtun::processor::Event::SetLog(ffi_sender));
+    std::thread::spawn(move || {
+        let rt = tokio::runtime::Builder::new_multi_thread()
+            .enable_all()
+            .build()
+            .unwrap();
+        rt.block_on(async { handle_log_callback(ffi_receiver, log_callback) })
+    });
+}
+
+async fn handle_log_callback(
+    ffi_receiver: crossbeam_channel::Receiver<String>,
+    log_callback: extern "C" fn(msg: *const c_char),
+) {
+    loop {
+        match ffi_receiver.recv() {
+            Ok(response) => log_callback(crate::ffi_result::to_c_string(&response)),
+            Err(e) => {}
+        };
+    }
+}

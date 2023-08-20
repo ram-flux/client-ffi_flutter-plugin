@@ -90,6 +90,12 @@ pub unsafe extern "C" fn disconnect(port: u16) -> *const c_char {
     crate::service::disconnect(port)
 }
 
+#[no_mangle]
+pub extern "C" fn log(log_callback: extern "C" fn(msg: *const c_char)) -> *const c_char {
+    crate::service::log(log_callback);
+    crate::ffi_result::to_c_string("init log")
+}
+
 fn _init_log(level: &str, path: &str) {
     use tracing_subscriber::{
         fmt, prelude::__tracing_subscriber_SubscriberExt, util::SubscriberInitExt, EnvFilter,

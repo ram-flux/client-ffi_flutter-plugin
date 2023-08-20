@@ -16,6 +16,8 @@ const char *connect_to_node(const char *req,
 
 const char *disconnect(uint16_t port);
 
+const char *log(void (*log_callback)(const char *msg));
+
 const char *test(const char *str);
 
 #ifdef __cplusplus

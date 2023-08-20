@@ -33,7 +33,7 @@ toml = "0.7"
 thiserror = { version = "1" }
 anyhow = "1"
 
-allo-isolate = "0.1.6"
+# allo-isolate = "0.1.6"
 
 once_cell = { version = "1", default-features = false }
 
@@ -41,7 +41,8 @@ once_cell = { version = "1", default-features = false }
 # [dependencies.boringtun]
 # version = "0.6.0"
 # features = ["device"]
-boringtun = { git = "https://github.com/ram-flux/node.git", branch = "new-boringtun" }
+# boringtun = { git = "https://github.com/ram-flux/node.git", branch = "new-boringtun" }
+boringtun = { path = "../../boringtun" }
 
 [build-dependencies]
 # flutter_rust_bridge_codegen = "=1.51.0"

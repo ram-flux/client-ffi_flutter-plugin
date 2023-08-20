@@ -68,6 +68,20 @@ typedef _disconnect_Dart = Pointer<ffi.Utf8> Function(
   int port,
 );
 
+/// C function `log`.
+Pointer<ffi.Utf8> log(
+  Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>)>> log_callback,
+) {
+  return _log(log_callback);
+}
+final _log_Dart _log = _dl.lookupFunction<_log_C, _log_Dart>('log');
+typedef _log_C = Pointer<ffi.Utf8> Function(
+  Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>)>> log_callback,
+);
+typedef _log_Dart = Pointer<ffi.Utf8> Function(
+  Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>)>> log_callback,
+);
+
 /// Binding to `allo-isolate` crate
 void store_dart_post_cobject(
   Pointer<NativeFunction<Int8 Function(Int64, Pointer<Dart_CObject>)>> ptr,
