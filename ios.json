@@ -2,7 +2,7 @@
     "start_req": {
         "type": "client",
         "set_key_req": {
-            "prikey": "c4d6a712074a229f3f207fd39b87bf5ae20d106f7f679476ce73d3a6d408772e"
+            "prikey": "24cb4dfa4b7f2a6eca6b84293d706e22e154ae15236cfde586b7dc3630c305d6"
         },
         "assign_interface_req": {
             "name": "utun",
@@ -13,7 +13,7 @@
             "fd": 0
         },
         "add_transport_req": {
-            "port": 7777,
+            "port": 5173,
             "protocol": "tcp",
             "endpoint": "52.221.222.252:5173"
         },
@@ -23,7 +23,7 @@
             ]
         },
         "add_node_req": {
-            "pub_key": "b16e01d4adfdb906141612d62b45e85d7ff25cf5617923bda77141011cfc0e0b",
+            "pub_key": "4b1b1b7cb8370a37076027d79090d402b8a46b3237c39e015d5d8b278b494a62",
             "endpoint": "52.221.222.252:5173",
             "allowed_ips": [
                 "0.0.0.0/0"
