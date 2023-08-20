@@ -8,6 +8,6 @@ rustup target add aarch64-apple-ios x86_64-apple-ios
 cd client-ffi
 cargo lipo --release 
 
-cp -r ./target/universal/release/libclient_ffi.a   ../libs/ios/libclient_ffi.a
+cp -r ../../target/universal/release/libclient_ffi.a   ../libs/ios/libclient_ffi.a
 
 cp ../libs/ios/libclient_ffi.a  ../client_ffi_demo/ios
