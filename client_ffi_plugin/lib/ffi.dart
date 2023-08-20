@@ -68,17 +68,17 @@ typedef _disconnect_Dart = Pointer<ffi.Utf8> Function(
   int port,
 );
 
-/// C function `log`.
-Pointer<ffi.Utf8> log(
+/// C function `init_log`.
+Pointer<ffi.Utf8> init_log(
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>)>> log_callback,
 ) {
-  return _log(log_callback);
+  return _init_log(log_callback);
 }
-final _log_Dart _log = _dl.lookupFunction<_log_C, _log_Dart>('log');
-typedef _log_C = Pointer<ffi.Utf8> Function(
+final _init_log_Dart _init_log = _dl.lookupFunction<_init_log_C, _init_log_Dart>('init_log');
+typedef _init_log_C = Pointer<ffi.Utf8> Function(
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>)>> log_callback,
 );
-typedef _log_Dart = Pointer<ffi.Utf8> Function(
+typedef _init_log_Dart = Pointer<ffi.Utf8> Function(
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>)>> log_callback,
 );
 

@@ -91,7 +91,7 @@ pub unsafe extern "C" fn disconnect(port: u16) -> *const c_char {
 }
 
 #[no_mangle]
-pub extern "C" fn log(log_callback: extern "C" fn(msg: *const c_char)) -> *const c_char {
+pub extern "C" fn init_log(log_callback: extern "C" fn(msg: *const c_char)) -> *const c_char {
     crate::service::log(log_callback);
     crate::ffi_result::to_c_string("init log")
 }
