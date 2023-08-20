@@ -134,22 +134,25 @@ pub fn log(log_callback: extern "C" fn(msg: *const c_char)) {
     std::thread::spawn(move || {
         log_callback(crate::ffi_result::to_c_string("开了新线程，并且传个值"));
 
-        let rt = tokio::runtime::Builder::new_multi_thread()
-            .enable_all()
-            .build()
-            .unwrap();
+        // let rt = tokio::runtime::Builder::new_multi_thread()
+        //     .enable_all()
+        //     .build()
+        //     .unwrap();
 
-        rt.block_on(async { handle_log_callback(ffi_receiver, log_callback) })
+        // rt.block_on(async { handle_log_callback(ffi_receiver, log_callback) })
+        handle_log_callback(ffi_receiver, log_callback)
     });
 
     // handle_log_callback(ffi_receiver, log_callback);
 }
 
-async fn handle_log_callback(
+fn handle_log_callback(
     ffi_receiver: crossbeam_channel::Receiver<String>,
     log_callback: extern "C" fn(msg: *const c_char),
 ) {
-    log_callback(crate::ffi_result::to_c_string("开了新线程, 并且是tokio的, 然后随便塞个值"));
+    log_callback(crate::ffi_result::to_c_string(
+        "开了新线程, 并且是tokio的, 然后随便塞个值",
+    ));
     loop {
         match ffi_receiver.recv() {
             Ok(response) => log_callback(crate::ffi_result::to_c_string(&response)),
