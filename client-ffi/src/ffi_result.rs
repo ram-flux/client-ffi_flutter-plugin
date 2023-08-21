@@ -17,11 +17,11 @@ impl<T: serde::Serialize> FfiResult<T> {
     }
 }
 
-impl<T> From<boringtun::rpc::http_server::response_v2::Response<T>> for FfiResult<T>
+impl<T> From<boringtun::rpc::http_server::response::Response<T>> for FfiResult<T>
 where
     T: serde::Serialize + Sized,
 {
-    fn from(value: boringtun::rpc::http_server::response_v2::Response<T>) -> Self {
+    fn from(value: boringtun::rpc::http_server::response::Response<T>) -> Self {
         FfiResult {
             data: value.data,
             message: value.message,
