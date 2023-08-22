@@ -211,7 +211,7 @@ dependencies = [
 [[package]]
 name = "boringtun"
 version = "0.6.1"
-source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#17a46eb8b263b3fdae575ce356060d2572e7a36e"
+source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#7ac266ee5e1394e71b856fe4e457efea3572a59b"
 dependencies = [
  "aead",
  "anyhow",
@@ -1611,9 +1611,9 @@ dependencies = [
 
 [[package]]
 name = "rustls-webpki"
-version = "0.101.3"
+version = "0.101.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "261e9e0888cba427c3316e6322805653c9425240b6fd96cee7cb671ab70ab8d0"
+checksum = "7d93931baf2d282fff8d3a532bbfd7653f734643161b87e3e01e59a04439bf0d"
 dependencies = [
  "ring",
  "untrusted 0.7.1",
@@ -2208,7 +2208,7 @@ checksum = "3528ecfd12c466c6f163363caf2d02a71161dd5e1cc6ae7b34207ea2d42d81ed"
 [[package]]
 name = "tun"
 version = "0.2.0"
-source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#17a46eb8b263b3fdae575ce356060d2572e7a36e"
+source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#7ac266ee5e1394e71b856fe4e457efea3572a59b"
 dependencies = [
  "byteorder",
  "bytes",

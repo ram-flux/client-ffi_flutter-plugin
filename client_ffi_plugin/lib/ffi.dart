@@ -15,7 +15,7 @@ DynamicLibrary _open() {
 }
 
 /// C function `Java_com_techecho_rfapp_FFIUtil_connect_to_node`.
-Pointer<ffi.Utf8> Java_com_techecho_rfapp_FFIUtil_connect_to_node(
+int Java_com_techecho_rfapp_FFIUtil_connect_to_node(
   int env,
   int _class,
   int req,
@@ -27,7 +27,7 @@ Pointer<ffi.Utf8> Java_com_techecho_rfapp_FFIUtil_connect_to_node(
   return _Java_com_techecho_rfapp_FFIUtil_connect_to_node(env, _class, req, on_connected_callback, on_disconnected_callback, path, fd);
 }
 final _Java_com_techecho_rfapp_FFIUtil_connect_to_node_Dart _Java_com_techecho_rfapp_FFIUtil_connect_to_node = _dl.lookupFunction<_Java_com_techecho_rfapp_FFIUtil_connect_to_node_C, _Java_com_techecho_rfapp_FFIUtil_connect_to_node_Dart>('Java_com_techecho_rfapp_FFIUtil_connect_to_node');
-typedef _Java_com_techecho_rfapp_FFIUtil_connect_to_node_C = Pointer<ffi.Utf8> Function(
+typedef _Java_com_techecho_rfapp_FFIUtil_connect_to_node_C = Int32 Function(
   Int32 env,
   Int32 _class,
   Int32 req,
@@ -36,7 +36,7 @@ typedef _Java_com_techecho_rfapp_FFIUtil_connect_to_node_C = Pointer<ffi.Utf8> F
   Int32 path,
   Int32 fd,
 );
-typedef _Java_com_techecho_rfapp_FFIUtil_connect_to_node_Dart = Pointer<ffi.Utf8> Function(
+typedef _Java_com_techecho_rfapp_FFIUtil_connect_to_node_Dart = int Function(
   int env,
   int _class,
   int req,

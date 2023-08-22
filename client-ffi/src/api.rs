@@ -94,29 +94,15 @@ pub unsafe extern fn Java_com_techecho_rfapp_FFIUtil_connect_to_node(
     on_disconnected_callback: extern fn(node_ptr: jni::objects::JString, error_message: jni::objects::JString),
     path: jni::objects::JString,
     fd: jni::sys::jint,
-) -> *const c_char {
-    // let config = crate::config::Config::init("./config.toml");
-    // let _ = _init_log(config.log_level.as_str());
-    println!("[connect_to_node] get path");
-
-    let path = unsafe { std::ffi::CStr::from_ptr(path) }.to_str().unwrap();
-    println!("[connect_to_node] start");
-    LOG_INIT.get_or_init(|| {
-        let _ = _init_log("debug", path);
-    });
-    // let _ = _init_log("debug", path);
-    // 将参数转换为 Rust 字符串
-    println!("[connect_to_node] init tracing log");
-    let mut connect_req: crate::service::ConnectReq =
-        match unsafe { std::ffi::CStr::from_ptr(req) }.to_str() {
-            Err(e) => {
-                let res = std::ffi::CString::new(format!("Invalid request json: {e}")).unwrap();
-                return res.into_raw();
-            }
-            Ok(req) => serde_json::from_str(req).unwrap(),
-        };
-    connect_req.start_req.assign_interface_req.fd = Some(fd);
-    connect_req.connect(on_connected_callback, on_disconnected_callback)
+) -> jni::sys::jstring {
+//     let req = env.get_string(req).expect("invalid pattern string").as_ptr();
+//     let path = env.get_string(path).expect("invalid pattern string").as_ptr();
+//     let path = (path).expect("invalid pattern string").as_ptr();
+//     let output = connect_to_node(req, on_connected_callback, on_disconnected_callback, path, fd);
+//     let world_ptr = std::ffi::CString::from_raw(output);
+//         let output = env.new_string(world_ptr.to_str().unwrap()).expect("Couldn't create java string!");
+//     output.into_raw()
+    
 }
 
 #[no_mangle]
