@@ -86,12 +86,14 @@ pub extern "C" fn connect_to_node(
 
 #[cfg(target_os = "android")]
 #[no_mangle]
-pub unsafe extern "C" fn Java_com_techecho_rfapp_FFIUtil_connect_to_node(
-    req: *const c_char,
-    on_connected_callback: extern "C" fn(node_ptr: *const c_char, error_message: *const c_char),
-    on_disconnected_callback: extern "C" fn(node_ptr: *const c_char, error_message: *const c_char),
-    path: *const c_char,
-    fd: std::os::raw::c_int,
+pub unsafe extern fn Java_com_techecho_rfapp_FFIUtil_connect_to_node(
+    env: jni::JNIEnv,
+    _class: jni::objects::JClass,
+    req: jni::objects::JString,
+    on_connected_callback: extern fn(node_ptr: jni::objects::JString, error_message: jni::objects::JString),
+    on_disconnected_callback: extern fn(node_ptr: jni::objects::JString, error_message: jni::objects::JString),
+    path: jni::objects::JString,
+    fd: jni::sys::jint,
 ) -> *const c_char {
     // let config = crate::config::Config::init("./config.toml");
     // let _ = _init_log(config.log_level.as_str());

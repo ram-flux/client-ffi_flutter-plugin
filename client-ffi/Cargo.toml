@@ -36,12 +36,14 @@ anyhow = "1"
 # allo-isolate = "0.1.6"
 
 once_cell = { version = "1", default-features = false }
+# [target.'cfg(target_os="android")'.dependencies]
+jni = { version = "0.5", default-features = false }
 
 # regex = { git = "git@github.com:ram-flux/node.git", branch = "new-boringtun" }
 # [dependencies.boringtun]
 # version = "0.6.0"
 # features = ["device"]
-boringtun = { git = "https://github.com/ram-flux/node.git", branch = "new-boringtun" }
+boringtun = { git = "https://github.com/ram-flux/node.git", branch = "new-boringtun"}
 # boringtun = { path = "../../boringtun" }
 
 [build-dependencies]

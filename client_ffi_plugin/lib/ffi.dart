@@ -16,27 +16,33 @@ DynamicLibrary _open() {
 
 /// C function `Java_com_techecho_rfapp_FFIUtil_connect_to_node`.
 Pointer<ffi.Utf8> Java_com_techecho_rfapp_FFIUtil_connect_to_node(
-  Pointer<ffi.Utf8> req,
-  Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_connected_callback,
-  Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_disconnected_callback,
-  Pointer<ffi.Utf8> path,
+  int env,
+  int _class,
+  int req,
+  Pointer<NativeFunction<Void Function(Int32, Int32)>> on_connected_callback,
+  Pointer<NativeFunction<Void Function(Int32, Int32)>> on_disconnected_callback,
+  int path,
   int fd,
 ) {
-  return _Java_com_techecho_rfapp_FFIUtil_connect_to_node(req, on_connected_callback, on_disconnected_callback, path, fd);
+  return _Java_com_techecho_rfapp_FFIUtil_connect_to_node(env, _class, req, on_connected_callback, on_disconnected_callback, path, fd);
 }
 final _Java_com_techecho_rfapp_FFIUtil_connect_to_node_Dart _Java_com_techecho_rfapp_FFIUtil_connect_to_node = _dl.lookupFunction<_Java_com_techecho_rfapp_FFIUtil_connect_to_node_C, _Java_com_techecho_rfapp_FFIUtil_connect_to_node_Dart>('Java_com_techecho_rfapp_FFIUtil_connect_to_node');
 typedef _Java_com_techecho_rfapp_FFIUtil_connect_to_node_C = Pointer<ffi.Utf8> Function(
-  Pointer<ffi.Utf8> req,
-  Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_connected_callback,
-  Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_disconnected_callback,
-  Pointer<ffi.Utf8> path,
+  Int32 env,
+  Int32 _class,
+  Int32 req,
+  Pointer<NativeFunction<Void Function(Int32, Int32)>> on_connected_callback,
+  Pointer<NativeFunction<Void Function(Int32, Int32)>> on_disconnected_callback,
+  Int32 path,
   Int32 fd,
 );
 typedef _Java_com_techecho_rfapp_FFIUtil_connect_to_node_Dart = Pointer<ffi.Utf8> Function(
-  Pointer<ffi.Utf8> req,
-  Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_connected_callback,
-  Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_disconnected_callback,
-  Pointer<ffi.Utf8> path,
+  int env,
+  int _class,
+  int req,
+  Pointer<NativeFunction<Void Function(Int32, Int32)>> on_connected_callback,
+  Pointer<NativeFunction<Void Function(Int32, Int32)>> on_disconnected_callback,
+  int path,
   int fd,
 );
 
