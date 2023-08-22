@@ -25,7 +25,7 @@ impl ConnectReq {
         let (callback_sender, callback_recv) =
             crossbeam_channel::unbounded::<ffi_callback::Event>();
         let (ffi_sender, ffi_receiver) = crossbeam_channel::unbounded::<
-            boringtun::rpc::http_server::response_v2::Response<Option<processor::node::Node>>,
+            boringtun::rpc::http_server::response::Response<Option<processor::node::Node>>,
         >();
         // send connect cmd
         let _ = collect_tx.send(processor::Event::ClientStart(
@@ -106,7 +106,7 @@ async fn handle_callback_errors(
 pub fn disconnect(port: u16) -> *const c_char {
     let collect_tx = processor::processor_tx_generator();
     let (ffi_sender, ffi_receiver) = crossbeam_channel::unbounded::<
-        boringtun::rpc::http_server::response_v2::Response<processor::node::Node>,
+        boringtun::rpc::http_server::response::Response<processor::node::Node>,
     >();
     let _ = collect_tx.send(processor::Event::ClientDisconnect(port, ffi_sender));
 
