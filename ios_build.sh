@@ -1,5 +1,5 @@
 # Download targets for IOS ( 64 bit targets (real device & simulator) )
-rustup target add aarch64-apple-ios x86_64-apple-ios
+rustup target add aarch64-apple-ios
 # rustup target add aarch64-apple-ios armv7-apple-ios armv7s-apple-ios x86_64-apple-ios i386-apple-ios
 
  
