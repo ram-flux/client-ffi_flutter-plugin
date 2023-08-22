@@ -29,6 +29,8 @@ const char *disconnect(uint16_t port);
 
 const char *init_log(void (*log_callback)(const char *msg));
 
+const char *start_tun(int fd);
+
 const char *test(const char *str);
 
 #ifdef __cplusplus

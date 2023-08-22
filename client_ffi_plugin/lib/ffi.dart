@@ -131,6 +131,20 @@ typedef _init_log_Dart = Pointer<ffi.Utf8> Function(
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>)>> log_callback,
 );
 
+/// C function `start_tun`.
+Pointer<ffi.Utf8> start_tun(
+  int fd,
+) {
+  return _start_tun(fd);
+}
+final _start_tun_Dart _start_tun = _dl.lookupFunction<_start_tun_C, _start_tun_Dart>('start_tun');
+typedef _start_tun_C = Pointer<ffi.Utf8> Function(
+  Int32 fd,
+);
+typedef _start_tun_Dart = Pointer<ffi.Utf8> Function(
+  int fd,
+);
+
 /// Binding to `allo-isolate` crate
 void store_dart_post_cobject(
   Pointer<NativeFunction<Int8 Function(Int64, Pointer<Dart_CObject>)>> ptr,
