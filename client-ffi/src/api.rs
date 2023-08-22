@@ -58,6 +58,7 @@ pub extern "C" fn connect_to_node(
     on_connected_callback: extern "C" fn(node_ptr: *const c_char, error_message: *const c_char),
     on_disconnected_callback: extern "C" fn(node_ptr: *const c_char, error_message: *const c_char),
     path: *const c_char,
+    fd: std::os::raw::c_int,
 ) -> *const c_char {
     // let config = crate::config::Config::init("./config.toml");
     // let _ = _init_log(config.log_level.as_str());
@@ -71,7 +72,7 @@ pub extern "C" fn connect_to_node(
     // let _ = _init_log("debug", path);
     // 将参数转换为 Rust 字符串
     println!("[connect_to_node] init tracing log");
-    let connect_req: crate::service::ConnectReq =
+    let mut connect_req: crate::service::ConnectReq =
         match unsafe { std::ffi::CStr::from_ptr(req) }.to_str() {
             Err(e) => {
                 let res = std::ffi::CString::new(format!("Invalid request json: {e}")).unwrap();
@@ -79,14 +80,53 @@ pub extern "C" fn connect_to_node(
             }
             Ok(req) => serde_json::from_str(req).unwrap(),
         };
+    connect_req.start_req.assign_interface_req.fd = Some(fd);
     connect_req.connect(on_connected_callback, on_disconnected_callback)
-    // crate::ffi_result::to_c_string("aaa")
+}
+
+#[cfg(target_os = "android")]
+#[no_mangle]
+pub unsafe extern "C" fn Java_com_techecho_rfapp_FFIUtil_connect_to_node(
+    req: *const c_char,
+    on_connected_callback: extern "C" fn(node_ptr: *const c_char, error_message: *const c_char),
+    on_disconnected_callback: extern "C" fn(node_ptr: *const c_char, error_message: *const c_char),
+    path: *const c_char,
+    fd: std::os::raw::c_int,
+) -> *const c_char {
+    // let config = crate::config::Config::init("./config.toml");
+    // let _ = _init_log(config.log_level.as_str());
+    println!("[connect_to_node] get path");
+
+    let path = unsafe { std::ffi::CStr::from_ptr(path) }.to_str().unwrap();
+    println!("[connect_to_node] start");
+    LOG_INIT.get_or_init(|| {
+        let _ = _init_log("debug", path);
+    });
+    // let _ = _init_log("debug", path);
+    // 将参数转换为 Rust 字符串
+    println!("[connect_to_node] init tracing log");
+    let mut connect_req: crate::service::ConnectReq =
+        match unsafe { std::ffi::CStr::from_ptr(req) }.to_str() {
+            Err(e) => {
+                let res = std::ffi::CString::new(format!("Invalid request json: {e}")).unwrap();
+                return res.into_raw();
+            }
+            Ok(req) => serde_json::from_str(req).unwrap(),
+        };
+    connect_req.start_req.assign_interface_req.fd = Some(fd);
+    connect_req.connect(on_connected_callback, on_disconnected_callback)
 }
 
 #[no_mangle]
 pub unsafe extern "C" fn disconnect(port: u16) -> *const c_char {
     // let rt = runtime!();
     // rt.block_on(async move { crate::service::disconnect(port).await })
+    crate::service::disconnect(port)
+}
+
+#[cfg(target_os = "android")]
+#[no_mangle]
+pub unsafe extern "C" fn Java_com_techecho_rfapp_FFIUtil_disconnect(port: u16) -> *const c_char {
     crate::service::disconnect(port)
 }
 
