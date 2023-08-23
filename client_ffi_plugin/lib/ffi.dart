@@ -19,8 +19,8 @@ int Java_com_techecho_rfapp_FFIUtil_connect_to_node(
   int env,
   int _class,
   int req,
-  Pointer<NativeFunction<Void Function(Int32, Int32)>> on_connected_callback,
-  Pointer<NativeFunction<Void Function(Int32, Int32)>> on_disconnected_callback,
+  int on_connected_callback,
+  int on_disconnected_callback,
   int path,
   int fd,
 ) {
@@ -31,8 +31,8 @@ typedef _Java_com_techecho_rfapp_FFIUtil_connect_to_node_C = Int32 Function(
   Int32 env,
   Int32 _class,
   Int32 req,
-  Pointer<NativeFunction<Void Function(Int32, Int32)>> on_connected_callback,
-  Pointer<NativeFunction<Void Function(Int32, Int32)>> on_disconnected_callback,
+  Int32 on_connected_callback,
+  Int32 on_disconnected_callback,
   Int32 path,
   Int32 fd,
 );
@@ -40,23 +40,29 @@ typedef _Java_com_techecho_rfapp_FFIUtil_connect_to_node_Dart = int Function(
   int env,
   int _class,
   int req,
-  Pointer<NativeFunction<Void Function(Int32, Int32)>> on_connected_callback,
-  Pointer<NativeFunction<Void Function(Int32, Int32)>> on_disconnected_callback,
+  int on_connected_callback,
+  int on_disconnected_callback,
   int path,
   int fd,
 );
 
 /// C function `Java_com_techecho_rfapp_FFIUtil_disconnect`.
-Pointer<ffi.Utf8> Java_com_techecho_rfapp_FFIUtil_disconnect(
+int Java_com_techecho_rfapp_FFIUtil_disconnect(
+  int env,
+  int _class,
   int port,
 ) {
-  return _Java_com_techecho_rfapp_FFIUtil_disconnect(port);
+  return _Java_com_techecho_rfapp_FFIUtil_disconnect(env, _class, port);
 }
 final _Java_com_techecho_rfapp_FFIUtil_disconnect_Dart _Java_com_techecho_rfapp_FFIUtil_disconnect = _dl.lookupFunction<_Java_com_techecho_rfapp_FFIUtil_disconnect_C, _Java_com_techecho_rfapp_FFIUtil_disconnect_Dart>('Java_com_techecho_rfapp_FFIUtil_disconnect');
-typedef _Java_com_techecho_rfapp_FFIUtil_disconnect_C = Pointer<ffi.Utf8> Function(
+typedef _Java_com_techecho_rfapp_FFIUtil_disconnect_C = Int32 Function(
+  Int32 env,
+  Int32 _class,
   Int32 port,
 );
-typedef _Java_com_techecho_rfapp_FFIUtil_disconnect_Dart = Pointer<ffi.Utf8> Function(
+typedef _Java_com_techecho_rfapp_FFIUtil_disconnect_Dart = int Function(
+  int env,
+  int _class,
   int port,
 );
 
@@ -82,24 +88,21 @@ Pointer<ffi.Utf8> connect_to_node(
   Pointer<ffi.Utf8> req,
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_connected_callback,
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_disconnected_callback,
-  Pointer<ffi.Utf8> path,
   int fd,
 ) {
-  return _connect_to_node(req, on_connected_callback, on_disconnected_callback, path, fd);
+  return _connect_to_node(req, on_connected_callback, on_disconnected_callback, fd);
 }
 final _connect_to_node_Dart _connect_to_node = _dl.lookupFunction<_connect_to_node_C, _connect_to_node_Dart>('connect_to_node');
 typedef _connect_to_node_C = Pointer<ffi.Utf8> Function(
   Pointer<ffi.Utf8> req,
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_connected_callback,
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_disconnected_callback,
-  Pointer<ffi.Utf8> path,
   Int32 fd,
 );
 typedef _connect_to_node_Dart = Pointer<ffi.Utf8> Function(
   Pointer<ffi.Utf8> req,
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_connected_callback,
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>, Pointer<ffi.Utf8>)>> on_disconnected_callback,
-  Pointer<ffi.Utf8> path,
   int fd,
 );
 
@@ -129,20 +132,6 @@ typedef _init_log_C = Pointer<ffi.Utf8> Function(
 );
 typedef _init_log_Dart = Pointer<ffi.Utf8> Function(
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>)>> log_callback,
-);
-
-/// C function `start_tun`.
-Pointer<ffi.Utf8> start_tun(
-  int fd,
-) {
-  return _start_tun(fd);
-}
-final _start_tun_Dart _start_tun = _dl.lookupFunction<_start_tun_C, _start_tun_Dart>('start_tun');
-typedef _start_tun_C = Pointer<ffi.Utf8> Function(
-  Int32 fd,
-);
-typedef _start_tun_Dart = Pointer<ffi.Utf8> Function(
-  int fd,
 );
 
 /// Binding to `allo-isolate` crate

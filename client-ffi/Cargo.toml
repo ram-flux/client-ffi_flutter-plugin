@@ -37,7 +37,7 @@ anyhow = "1"
 
 once_cell = { version = "1", default-features = false }
 # [target.'cfg(target_os="android")'.dependencies]
-jni = { version = "0.5", default-features = false }
+jni = { version = "0.21.1", default-features = false }
 
 # regex = { git = "git@github.com:ram-flux/node.git", branch = "new-boringtun" }
 # [dependencies.boringtun]
