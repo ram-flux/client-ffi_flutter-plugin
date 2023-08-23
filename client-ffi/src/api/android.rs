@@ -46,7 +46,7 @@ pub unsafe extern "C" fn Java_com_techecho_rfapp_FFIUtil_disconnect(
 
 #[cfg(target_os = "android")]
 #[no_mangle]
-pub extern "C" fn test(
+pub extern "C" fn Java_com_techecho_rfapp_FFIUtil_test(
     mut env: jni::JNIEnv,
     _class: jni::objects::JClass,
     str: jni::objects::JString,

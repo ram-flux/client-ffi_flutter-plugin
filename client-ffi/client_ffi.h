@@ -17,6 +17,8 @@ jstring Java_com_techecho_rfapp_FFIUtil_connect_to_node(JNIEnv env,
 
 jstring Java_com_techecho_rfapp_FFIUtil_disconnect(JNIEnv env, JClass _class, jint port);
 
+jstring Java_com_techecho_rfapp_FFIUtil_test(JNIEnv env, JClass _class, JString str);
+
 const char *add(uintptr_t left, uintptr_t right);
 
 const char *connect_to_node(const char *req,
@@ -27,8 +29,6 @@ const char *connect_to_node(const char *req,
 const char *disconnect(uint16_t port);
 
 const char *init_log(void (*log_callback)(const char *msg));
-
-jstring test(JNIEnv env, JClass _class, JString str);
 
 const char *test(const char *str);
 

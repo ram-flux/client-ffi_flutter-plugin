@@ -66,6 +66,26 @@ typedef _Java_com_techecho_rfapp_FFIUtil_disconnect_Dart = int Function(
   int port,
 );
 
+/// C function `Java_com_techecho_rfapp_FFIUtil_test`.
+int Java_com_techecho_rfapp_FFIUtil_test(
+  int env,
+  int _class,
+  int str,
+) {
+  return _Java_com_techecho_rfapp_FFIUtil_test(env, _class, str);
+}
+final _Java_com_techecho_rfapp_FFIUtil_test_Dart _Java_com_techecho_rfapp_FFIUtil_test = _dl.lookupFunction<_Java_com_techecho_rfapp_FFIUtil_test_C, _Java_com_techecho_rfapp_FFIUtil_test_Dart>('Java_com_techecho_rfapp_FFIUtil_test');
+typedef _Java_com_techecho_rfapp_FFIUtil_test_C = Int32 Function(
+  Int32 env,
+  Int32 _class,
+  Int32 str,
+);
+typedef _Java_com_techecho_rfapp_FFIUtil_test_Dart = int Function(
+  int env,
+  int _class,
+  int str,
+);
+
 /// C function `add`.
 Pointer<ffi.Utf8> add(
   int left,
