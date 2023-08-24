@@ -2,7 +2,7 @@
     "start_req": {
         "type": "client",
         "set_key_req": {
-            "prikey": "b9ef9dd19d07c0ace48d58c71badffd84379922ead09ecf8e16a7d99ba02e9ce"
+            "prikey": "4a70fe852c152df4c23cd01b5ba44bb0a8609b5cb511cef713945b8e25221999"
         },
         "assign_interface_req": {
             "name": "utun",
@@ -22,7 +22,7 @@
             ]
         },
         "add_node_req": {
-            "pub_key": "95a853fea625094d4e4d57925371bf12e9d7c8b0636cea9b72b1d689c5fc057b",
+            "pub_key": "31d7d3f5ccc1ad0214572918e1de84ec72f93177370cc28df6dd58413425fb58",
             "endpoint": "52.221.222.252:5173",
             "allowed_ips": [
                 "0.0.0.0/0"
