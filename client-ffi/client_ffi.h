@@ -7,15 +7,16 @@
 extern "C" {
 #endif // __cplusplus
 
-jstring Java_com_techecho_rfapp_FFIUtil_connect_to_node(JNIEnv env,
-                                                        JClass _class,
-                                                        JString req,
-                                                        JObject on_connected_callback,
-                                                        JObject on_disconnected_callback,
-                                                        JString path,
-                                                        jint fd);
+jstring Java_com_techecho_rfapp_FFIUtil_connectToNode(JNIEnv env,
+                                                      JClass _class,
+                                                      JString req,
+                                                      JObject connect_status_callback,
+                                                      JString path,
+                                                      jint fd);
 
 jstring Java_com_techecho_rfapp_FFIUtil_disconnect(JNIEnv env, JClass _class, jint port);
+
+void Java_com_techecho_rfapp_FFIUtil_syncCallback(JNIEnv env, JClass _class, JObject callback);
 
 jstring Java_com_techecho_rfapp_FFIUtil_test(JNIEnv env, JClass _class, JString str);
 

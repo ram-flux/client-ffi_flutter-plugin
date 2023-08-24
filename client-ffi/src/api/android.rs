@@ -1,11 +1,11 @@
 #[cfg(target_os = "android")]
 #[no_mangle]
-pub unsafe extern "C" fn Java_com_techecho_rfapp_FFIUtil_connect_to_node(
+pub unsafe extern "C" fn Java_com_techecho_rfapp_FFIUtil_connectToNode(
     mut env: jni::JNIEnv,
     _class: jni::objects::JClass,
     req: jni::objects::JString,
-    on_connected_callback: jni::objects::JObject,
-    on_disconnected_callback: jni::objects::JObject,
+    // on_connected_callback: jni::objects::JObject,
+    connect_status_callback: jni::objects::JObject,
     path: jni::objects::JString,
     fd: jni::sys::jint,
 ) -> jni::sys::jstring {
@@ -13,12 +13,12 @@ pub unsafe extern "C" fn Java_com_techecho_rfapp_FFIUtil_connect_to_node(
     let path: String = env.get_string(&path).unwrap().into();
     let connect_req = super::serde_req(&req, &path, fd);
 
-    let on_connected_callback = env.new_global_ref(on_connected_callback).unwrap();
-    let on_disconnected_callback = env.new_global_ref(on_disconnected_callback).unwrap();
+    // let on_connected_callback = env.new_global_ref(on_connected_callback).unwrap();
+    let connect_status_callback = env.new_global_ref(connect_status_callback).unwrap();
     let jvm = env.get_java_vm().unwrap();
     let callback = crate::service::android::Callback::new(
-        on_connected_callback,
-        on_disconnected_callback,
+        // on_connected_callback,
+        connect_status_callback,
         jvm,
     );
 
@@ -55,4 +55,29 @@ pub extern "C" fn Java_com_techecho_rfapp_FFIUtil_test(
     let str: String = env.get_string(&str).unwrap().into();
     let java_string = env.new_string(str).expect("Failed to create Java string");
     java_string.into_raw()
+}
+
+#[cfg(target_os = "android")]
+#[no_mangle]
+pub extern "C" fn Java_com_techecho_rfapp_FFIUtil_syncCallback(
+    mut env: jni::JNIEnv,
+    _class: jni::objects::JClass,
+    callback: jni::objects::JObject,
+) {
+    let jni_string_node = jni::strings::JNIString::from("hahaa");
+    let j_string_node = env.new_string(jni_string_node).unwrap();
+    let j_value_node = jni::objects::JValue::from(&j_string_node);
+
+    let jni_string_err_msg = jni::strings::JNIString::from("eerrr");
+    let j_string_err_msg = env.new_string(jni_string_err_msg).unwrap();
+    let j_value_err_msg = jni::objects::JValue::from(&j_string_err_msg);
+
+    env.call_method(
+        callback,
+        "onStringCallback",
+        "(Ljava/lang/String;Ljava/lang/String;)V",
+        // "(Ljava/lang/String;)V",
+        &[j_value_node, j_value_err_msg],
+    )
+    .unwrap();
 }

@@ -1,18 +1,18 @@
 pub struct Callback {
-    on_connected_callback: jni::objects::GlobalRef,
-    on_disconnected_callback: jni::objects::GlobalRef,
+    // on_connected_callback: jni::objects::GlobalRef,
+    connect_status_callback: jni::objects::GlobalRef,
     jvm: jni::JavaVM,
 }
 
 impl Callback {
     pub(crate) fn new(
-        on_connected_callback: jni::objects::GlobalRef,
-        on_disconnected_callback: jni::objects::GlobalRef,
+        // on_connected_callback: jni::objects::GlobalRef,
+        connect_status_callback: jni::objects::GlobalRef,
         jvm: jni::JavaVM,
     ) -> Self {
         Callback {
-            on_connected_callback,
-            on_disconnected_callback,
+            // on_connected_callback,
+            connect_status_callback: connect_status_callback,
             jvm,
         }
     }
@@ -29,7 +29,7 @@ impl Callback {
         let j_value_err_msg = jni::objects::JValue::from(&j_string_err_msg);
 
         env.call_method(
-            &self.on_connected_callback,
+            &self.connect_status_callback,
             "onConnectedCallback",
             "(Ljava/lang/String;Ljava/lang/String;)V",
             &[j_value_node, j_value_err_msg],
@@ -49,7 +49,7 @@ impl Callback {
         let j_value_err_msg = jni::objects::JValue::from(&j_string_err_msg);
 
         env.call_method(
-            &self.on_disconnected_callback,
+            &self.connect_status_callback,
             "onDisconnectedCallback",
             "(Ljava/lang/String;Ljava/lang/String;)V",
             &[j_value_node, j_value_err_msg],

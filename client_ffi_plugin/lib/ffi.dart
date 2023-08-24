@@ -14,34 +14,31 @@ DynamicLibrary _open() {
   throw UnsupportedError('This platform is not supported.');
 }
 
-/// C function `Java_com_techecho_rfapp_FFIUtil_connect_to_node`.
-int Java_com_techecho_rfapp_FFIUtil_connect_to_node(
+/// C function `Java_com_techecho_rfapp_FFIUtil_connectToNode`.
+int Java_com_techecho_rfapp_FFIUtil_connectToNode(
   int env,
   int _class,
   int req,
-  int on_connected_callback,
-  int on_disconnected_callback,
+  int connect_status_callback,
   int path,
   int fd,
 ) {
-  return _Java_com_techecho_rfapp_FFIUtil_connect_to_node(env, _class, req, on_connected_callback, on_disconnected_callback, path, fd);
+  return _Java_com_techecho_rfapp_FFIUtil_connectToNode(env, _class, req, connect_status_callback, path, fd);
 }
-final _Java_com_techecho_rfapp_FFIUtil_connect_to_node_Dart _Java_com_techecho_rfapp_FFIUtil_connect_to_node = _dl.lookupFunction<_Java_com_techecho_rfapp_FFIUtil_connect_to_node_C, _Java_com_techecho_rfapp_FFIUtil_connect_to_node_Dart>('Java_com_techecho_rfapp_FFIUtil_connect_to_node');
-typedef _Java_com_techecho_rfapp_FFIUtil_connect_to_node_C = Int32 Function(
+final _Java_com_techecho_rfapp_FFIUtil_connectToNode_Dart _Java_com_techecho_rfapp_FFIUtil_connectToNode = _dl.lookupFunction<_Java_com_techecho_rfapp_FFIUtil_connectToNode_C, _Java_com_techecho_rfapp_FFIUtil_connectToNode_Dart>('Java_com_techecho_rfapp_FFIUtil_connectToNode');
+typedef _Java_com_techecho_rfapp_FFIUtil_connectToNode_C = Int32 Function(
   Int32 env,
   Int32 _class,
   Int32 req,
-  Int32 on_connected_callback,
-  Int32 on_disconnected_callback,
+  Int32 connect_status_callback,
   Int32 path,
   Int32 fd,
 );
-typedef _Java_com_techecho_rfapp_FFIUtil_connect_to_node_Dart = int Function(
+typedef _Java_com_techecho_rfapp_FFIUtil_connectToNode_Dart = int Function(
   int env,
   int _class,
   int req,
-  int on_connected_callback,
-  int on_disconnected_callback,
+  int connect_status_callback,
   int path,
   int fd,
 );
@@ -64,6 +61,26 @@ typedef _Java_com_techecho_rfapp_FFIUtil_disconnect_Dart = int Function(
   int env,
   int _class,
   int port,
+);
+
+/// C function `Java_com_techecho_rfapp_FFIUtil_syncCallback`.
+void Java_com_techecho_rfapp_FFIUtil_syncCallback(
+  int env,
+  int _class,
+  int callback,
+) {
+  _Java_com_techecho_rfapp_FFIUtil_syncCallback(env, _class, callback);
+}
+final _Java_com_techecho_rfapp_FFIUtil_syncCallback_Dart _Java_com_techecho_rfapp_FFIUtil_syncCallback = _dl.lookupFunction<_Java_com_techecho_rfapp_FFIUtil_syncCallback_C, _Java_com_techecho_rfapp_FFIUtil_syncCallback_Dart>('Java_com_techecho_rfapp_FFIUtil_syncCallback');
+typedef _Java_com_techecho_rfapp_FFIUtil_syncCallback_C = Void Function(
+  Int32 env,
+  Int32 _class,
+  Int32 callback,
+);
+typedef _Java_com_techecho_rfapp_FFIUtil_syncCallback_Dart = void Function(
+  int env,
+  int _class,
+  int callback,
 );
 
 /// C function `Java_com_techecho_rfapp_FFIUtil_test`.
