@@ -15,9 +15,9 @@ use serde::Deserialize;
 
 use crate::ffi_result::FfiResult;
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 pub struct ConnectReq {
-    pub start_req: boringtun::rpc::http_server::service::StartReq,
+    pub start_req: boringtun::rpc::http_server::service::ClientStartReq,
 }
 
 #[cfg(any(target_os = "android", target_os = "ios"))]
@@ -39,11 +39,11 @@ impl ConnectReq {
             boringtun::rpc::http_server::response::Response<Option<processor::node::Node>>,
         >();
         // send connect cmd
-        let _ = collect_tx.send(processor::Event::ClientStart(
-            self.start_req,
-            ffi_sender,
-            callback_sender,
-        ));
+        let _ = self.start_req.client_ffi_start(
+            collect_tx.clone(),
+            Some(ffi_sender),
+            Some(callback_sender),
+        );
 
         let response = match ffi_receiver.recv() {
             Ok(response) => response,
@@ -67,11 +67,6 @@ impl ConnectReq {
                         .enable_all()
                         .build()
                         .unwrap();
-                    // let t = Isolate::new(port).task(handle_callback_errors(
-                    //     callback_recv,
-                    //     on_disconnected_callback,
-                    // ));
-                    // rt.spawn(t);
                     rt.block_on(async { Self::handle_callback_errors(callback_recv, callback) })
                 });
             }

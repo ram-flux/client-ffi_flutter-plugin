@@ -1,32 +1,10 @@
 {
     "start_req": {
-        "type": "client",
-        "set_key_req": {
-            "prikey": "4a70fe852c152df4c23cd01b5ba44bb0a8609b5cb511cef713945b8e25221999"
-        },
-        "assign_interface_req": {
-            "name": "utun",
-            "num": 100,
-            "native_external_ip": "220.200.5.244",
-            "ipv4": "10.0.1.3",
-            "ipv6": "fd86:ea04:1111::"
-        },
-        "add_transport_req": {
-            "port": 5173,
-            "protocol": "tcp",
-            "endpoint": "52.221.222.252:5173"
-        },
-        "add_network_segment_req": {
-            "segments": [
-                "0.0.0.0/0"
-            ]
-        },
-        "add_node_req": {
-            "pub_key": "31d7d3f5ccc1ad0214572918e1de84ec72f93177370cc28df6dd58413425fb58",
-            "endpoint": "52.221.222.252:5173",
-            "allowed_ips": [
-                "0.0.0.0/0"
-            ]
-        }
+        "client_prikey": "c9e19fd398647265dddcd2fe4e6654f57494474f82fe67ab9de243669953e29d",
+        "node_pubkey": "0d1719d899c2498823d99060656d5c37d39364022e1123dfe6c7aa0475105468",
+        "node_addr": "52.221.222.252:5173",
+        "protocol": "tcp",
+        "iface_ipv4": "10.0.1.3",
+        "iface_ipv6": "fd86:ea04:1111::"
     }
 }

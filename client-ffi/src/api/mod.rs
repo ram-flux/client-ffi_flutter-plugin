@@ -17,7 +17,7 @@ pub fn serde_req(
             }
             Ok(req) => serde_json::from_str(req).unwrap(),
         };
-    connect_req.start_req.assign_interface_req.fd = Some(fd);
+    connect_req.start_req.fd = fd;
     Ok(connect_req)
 }
 
@@ -34,9 +34,15 @@ pub fn serde_req(req: &str, path: &str, fd: std::os::raw::c_int) -> crate::servi
     });
     // let _ = _init_log("debug", path);
     // 将参数转换为 Rust 字符串
-    println!("[connect_to_node] init tracing log");
-    let mut connect_req: crate::service::ConnectReq = serde_json::from_str(req).unwrap();
-    connect_req.start_req.assign_interface_req.fd = Some(fd);
+    tracing::info!("[serde_req] init tracing log");
+    let mut connect_req: crate::service::ConnectReq = match serde_json::from_str(req) {
+        Ok(connect_req) => connect_req,
+        Err(e) => {
+            tracing::error!("[serde_req] parse error: {}", e.to_string());
+            panic!();
+        }
+    };
+    connect_req.start_req.fd = Some(fd);
     connect_req
 }
 

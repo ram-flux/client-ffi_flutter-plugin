@@ -12,6 +12,7 @@ pub unsafe extern "C" fn Java_com_techecho_rfapp_FFIUtil_connectToNode(
     let req: String = env.get_string(&req).unwrap().into();
     let path: String = env.get_string(&path).unwrap().into();
     let connect_req = super::serde_req(&req, &path, fd);
+    tracing::info!("[Java_com_techecho_rfapp_FFIUtil_connectToNode] connect_req: {connect_req:#?}");
 
     // let on_connected_callback = env.new_global_ref(on_connected_callback).unwrap();
     let connect_status_callback = env.new_global_ref(connect_status_callback).unwrap();

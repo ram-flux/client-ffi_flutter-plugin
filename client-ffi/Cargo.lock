@@ -205,7 +205,7 @@ dependencies = [
 [[package]]
 name = "boringtun"
 version = "0.6.1"
-source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#b828fccd4d6fcf6ed856ef5e0a8ece54c7c5e9d4"
+source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#f4377fd7999cc767cd38f3845b46ff769f71f780"
 dependencies = [
  "aead",
  "anyhow",
@@ -2199,7 +2199,7 @@ checksum = "3528ecfd12c466c6f163363caf2d02a71161dd5e1cc6ae7b34207ea2d42d81ed"
 [[package]]
 name = "tun"
 version = "0.2.0"
-source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#b828fccd4d6fcf6ed856ef5e0a8ece54c7c5e9d4"
+source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#f4377fd7999cc767cd38f3845b46ff769f71f780"
 dependencies = [
  "byteorder",
  "bytes",
@@ -2626,9 +2626,9 @@ checksum = "ed94fce61571a4006852b7389a063ab983c02eb1bb37b47f8272ce92d06d9538"
 
 [[package]]
 name = "winnow"
-version = "0.5.14"
+version = "0.5.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d09770118a7eb1ccaf4a594a221334119a44a814fcb0d31c5b85e83e97227a97"
+checksum = "7c2e3184b9c4e92ad5167ca73039d0c42476302ab603e2fec4487511f38ccefc"
 dependencies = [
  "memchr",
 ]
