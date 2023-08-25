@@ -5,9 +5,9 @@ cargo install --force cbindgen
 # cbindgen --config cbindgen.toml --crate client-ffi --output ./client-ffi.h
 # cp ./client-ffi.h ./client_ffi_plugin/lib
 
-rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android
+rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
 cd client-ffi
-cargo ndk -t armeabi-v7a -t arm64-v8a -o ../libs/android/jniLibs build --release
+cargo ndk -t armeabi-v7a -t arm64-v8a -t x86_64 -t x86 -o ../libs/android/jniLibs build --release
 
 cp -r ../libs/android/jniLibs  ../client_ffi_demo/android/app/src/main
 
