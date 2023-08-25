@@ -17,7 +17,7 @@ pub fn serde_req(
             }
             Ok(req) => serde_json::from_str(req).unwrap(),
         };
-    connect_req.start_req.fd = fd;
+    connect_req.start_req.fd = Some(fd);
     Ok(connect_req)
 }
 
