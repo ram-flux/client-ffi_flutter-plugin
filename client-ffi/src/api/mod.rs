@@ -52,7 +52,7 @@ fn _init_log(level: &str, path: &str) {
         Registry,
     };
     // let path = format!("{path}/node-rs");
-    let file_appender = tracing_appender::rolling::hourly(path, "debug.log");
+    let file_appender = tracing_appender::rolling::hourly(path, "info.log");
     let env_filter = EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new(level));
     let formatting_layer = fmt::layer()
         .pretty()

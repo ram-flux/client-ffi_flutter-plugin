@@ -12,7 +12,7 @@ impl Callback {
     ) -> Self {
         Callback {
             // on_connected_callback,
-            connect_status_callback: connect_status_callback,
+            connect_status_callback,
             jvm,
         }
     }
