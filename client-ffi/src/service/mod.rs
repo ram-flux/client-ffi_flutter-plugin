@@ -62,13 +62,7 @@ impl ConnectReq {
                 callback.do_connected_callback(&node, "");
                 // on_connected_callback(node, std::ptr::null());
                 println!("[connect] connect success");
-                std::thread::spawn(move || {
-                    let rt = tokio::runtime::Builder::new_multi_thread()
-                        .enable_all()
-                        .build()
-                        .unwrap();
-                    rt.block_on(async { Self::handle_callback_errors(callback_recv, callback) })
-                });
+                std::thread::spawn(move || Self::handle_callback_errors(callback_recv, callback));
             }
             _ => {
                 callback.do_disconnected_callback("", &response.message);
@@ -78,7 +72,7 @@ impl ConnectReq {
         Into::<FfiResult<Option<processor::node::Node>>>::into(response).to_string()
     }
 
-    async fn handle_callback_errors(
+    fn handle_callback_errors(
         callback_recv: crossbeam_channel::Receiver<
             boringtun::rpc::http_server::ffi_callback::Event,
         >,
@@ -106,13 +100,15 @@ impl ConnectReq {
 
 pub fn disconnect(port: u16) -> String {
     let collect_tx = processor::processor_tx_generator();
-    let (ffi_sender, ffi_receiver) = crossbeam_channel::unbounded::<
-        boringtun::rpc::http_server::response::Response<processor::node::Node>,
-    >();
-    let res = collect_tx.send(processor::Event::ClientDisconnect(port, ffi_sender));
+    let (ffi_sender, ffi_receiver) = crossbeam_channel::unbounded();
+    let res = boringtun::rpc::http_server::service::client_disconnect(
+        port,
+        ffi_sender,
+        collect_tx.clone(),
+    );
     tracing::info!("[disconnect] res: {res:?}");
-    
-    let data = ffi_receiver.recv_timeout(std::time::Duration::from_secs(5));
+
+    let data = ffi_receiver.recv_timeout(std::time::Duration::from_secs(6));
     tracing::info!("[disconnect] data: {data:?}");
 
     let response = match data {
@@ -127,5 +123,5 @@ pub fn disconnect(port: u16) -> String {
             .to_string();
         }
     };
-    Into::<FfiResult<processor::node::Node>>::into(response).to_string()
+    Into::<FfiResult<Option<processor::node::Node>>>::into(response).to_string()
 }
