@@ -109,12 +109,18 @@ pub fn disconnect(port: u16) -> String {
     let (ffi_sender, ffi_receiver) = crossbeam_channel::unbounded::<
         boringtun::rpc::http_server::response::Response<processor::node::Node>,
     >();
-    let _ = collect_tx.send(processor::Event::ClientDisconnect(port, ffi_sender));
+    let res = collect_tx.send(processor::Event::ClientDisconnect(port, ffi_sender));
+    tracing::info!("[disconnect] res: {res:?}");
+    
+    let data = ffi_receiver.recv_timeout(std::time::Duration::from_secs(5));
+    tracing::info!("[disconnect] data: {data:?}");
 
-    let response = match ffi_receiver.recv() {
+    let response = match data {
         Ok(response) => response,
         Err(e) => {
             println!("[disconnect] error: {e}");
+            tracing::info!("[disconnect] error: {e}");
+
             return Into::<FfiResult<()>>::into(Err(
                 crate::ffi_error::Error::FfiChannelRecvFailed(e.to_string()),
             ))

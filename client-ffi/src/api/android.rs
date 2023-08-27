@@ -4,7 +4,6 @@ pub unsafe extern "C" fn Java_com_techecho_rfapp_FFIUtil_connectToNode(
     mut env: jni::JNIEnv,
     _class: jni::objects::JClass,
     req: jni::objects::JString,
-    // on_connected_callback: jni::objects::JObject,
     connect_status_callback: jni::objects::JObject,
     path: jni::objects::JString,
     fd: jni::sys::jint,
@@ -18,7 +17,6 @@ pub unsafe extern "C" fn Java_com_techecho_rfapp_FFIUtil_connectToNode(
     let connect_status_callback = env.new_global_ref(connect_status_callback).unwrap();
     let jvm = env.get_java_vm().unwrap();
     let callback = crate::service::android::Callback::new(
-        // on_connected_callback,
         connect_status_callback,
         jvm,
     );
