@@ -1,10 +1,10 @@
 {
     "start_req": {
-        "client_prikey": "5bcaa03877ea762a65db660ecaa915c7358d15b7ee6045fd4547a0468ba06d45",
-        "node_pubkey": "0d1719d899c2498823d99060656d5c37d39364022e1123dfe6c7aa0475105468",
+        "client_prikey": "8b881470ced963a0be0145945dcdae3ab0b6c6771703bc44d799c19477470341",
+        "node_pubkey": "310f88153eb5a7f94905b46ed0645c146f502cc54c97ecbac16cbdddf7b3c54e",
         "node_addr": "52.221.222.252:5173",
         "protocol": "tcp",
-        "iface_ipv4": "10.0.1.6",
+        "iface_ipv4": "10.0.1.2",
         "iface_ipv6": "fd86:ea04:1111::"
     }
 }
