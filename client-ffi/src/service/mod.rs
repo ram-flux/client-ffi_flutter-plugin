@@ -17,6 +17,7 @@ use crate::ffi_result::FfiResult;
 
 #[derive(Deserialize, Debug)]
 pub struct ConnectReq {
+    #[serde(flatten)]
     pub start_req: boringtun::rpc::http_server::service::ClientStartReq,
 }
 
