@@ -205,7 +205,7 @@ dependencies = [
 [[package]]
 name = "boringtun"
 version = "0.6.1"
-source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#959c793dc171eb9fb6d0f2ff4b93aa1e33adf057"
+source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#d9938fff72d395e90c8e40d9bf1d16c50cddc64c"
 dependencies = [
  "aead",
  "anyhow",
@@ -1172,9 +1172,9 @@ checksum = "ed1202b2a6f884ae56f04cff409ab315c5ce26b5e58d7412e484f01fd52f52ef"
 
 [[package]]
 name = "memchr"
-version = "2.6.1"
+version = "2.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f478948fd84d9f8e86967bf432640e46adfb5a4bd4f14ef7e864ab38220534ae"
+checksum = "5486aed0026218e61b8a01d5fbd5a0a134649abb71a0e53b7bc088529dced86e"
 
 [[package]]
 name = "mime"
@@ -2216,7 +2216,7 @@ checksum = "3528ecfd12c466c6f163363caf2d02a71161dd5e1cc6ae7b34207ea2d42d81ed"
 [[package]]
 name = "tun"
 version = "0.2.0"
-source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#959c793dc171eb9fb6d0f2ff4b93aa1e33adf057"
+source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#d9938fff72d395e90c8e40d9bf1d16c50cddc64c"
 dependencies = [
  "byteorder",
  "bytes",

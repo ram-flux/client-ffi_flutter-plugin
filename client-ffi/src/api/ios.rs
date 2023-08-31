@@ -1,3 +1,4 @@
+#[cfg(target_os = "ios")]
 use std::os::raw::c_char;
 
 #[cfg(target_os = "ios")]

@@ -16,10 +16,7 @@ pub unsafe extern "C" fn Java_com_techecho_rfapp_FFIUtil_connectToNode(
     // let on_connected_callback = env.new_global_ref(on_connected_callback).unwrap();
     let connect_status_callback = env.new_global_ref(connect_status_callback).unwrap();
     let jvm = env.get_java_vm().unwrap();
-    let callback = crate::service::android::Callback::new(
-        connect_status_callback,
-        jvm,
-    );
+    let callback = crate::service::android::Callback::new(connect_status_callback, jvm);
 
     let output = connect_req.connect(callback);
     let java_string = env

@@ -83,9 +83,9 @@ impl ConnectReq {
         // 在异步任务中处理错误
         match callback_recv.recv() {
             Ok(event) => match event {
-                boringtun::rpc::http_server::ffi_callback::Event::Disconnect(node) => {
-                    let node = serde_json::to_string(&node).unwrap();
-                    callback.do_disconnected_callback(&node, "");
+                boringtun::rpc::http_server::ffi_callback::Event::Disconnect(node, e) => {
+                    let node = serde_json::to_string(&node).unwrap_or_default();
+                    callback.do_disconnected_callback(&node, &e.to_string());
                 }
             },
             Err(e) => {
