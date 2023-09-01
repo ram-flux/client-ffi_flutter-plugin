@@ -103,20 +103,6 @@ typedef _Java_com_techecho_rfapp_FFIUtil_test_Dart = int Function(
   int str,
 );
 
-/// C struct `String`.
-class String extends Struct {
-  
-  static Pointer<String> allocate() {
-    return ffi.allocate<String>();
-  }
-
-
-  static String from(int ptr) {
-    return Pointer<String>.fromAddress(ptr).ref;
-  }
-
-}
-
 /// C function `add`.
 Pointer<ffi.Utf8> add(
   int left,
@@ -188,21 +174,21 @@ typedef _init_log_Dart = Pointer<ffi.Utf8> Function(
 /// C function `reset_transport`.
 Pointer<ffi.Utf8> reset_transport(
   int port,
-  String ip,
-  String protocol,
+  Pointer<ffi.Utf8> ip,
+  Pointer<ffi.Utf8> protocol,
 ) {
   return _reset_transport(port, ip, protocol);
 }
 final _reset_transport_Dart _reset_transport = _dl.lookupFunction<_reset_transport_C, _reset_transport_Dart>('reset_transport');
 typedef _reset_transport_C = Pointer<ffi.Utf8> Function(
   Int32 port,
-  String ip,
-  String protocol,
+  Pointer<ffi.Utf8> ip,
+  Pointer<ffi.Utf8> protocol,
 );
 typedef _reset_transport_Dart = Pointer<ffi.Utf8> Function(
   int port,
-  String ip,
-  String protocol,
+  Pointer<ffi.Utf8> ip,
+  Pointer<ffi.Utf8> protocol,
 );
 
 /// Binding to `allo-isolate` crate
