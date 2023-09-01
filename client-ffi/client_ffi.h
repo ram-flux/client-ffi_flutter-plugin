@@ -3,6 +3,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+typedef struct String String;
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
@@ -30,6 +32,8 @@ const char *connect_to_node(const char *req,
 const char *disconnect(uint16_t port);
 
 const char *init_log(void (*log_callback)(const char *msg));
+
+const char *reset_transport(uint16_t port, String ip, String protocol);
 
 const char *test(const char *str);
 

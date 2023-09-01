@@ -62,3 +62,16 @@ pub extern "C" fn init_log(log_callback: extern "C" fn(msg: *const c_char)) -> *
     crate::service::ios::log(log_callback);
     crate::ffi_result::to_c_string("init log")
 }
+
+#[cfg(target_os = "ios")]
+#[no_mangle]
+pub unsafe extern "C" fn reset_transport(port: u16, ip: String, protocol: String) -> *const c_char {
+    // let rt = runtime!();
+    // rt.block_on(async move { crate::service::disconnect(port).await })
+    let add_transport_req = boringtun::rpc::http_server::service::AddTransportReq {
+        port,
+        protocol,
+        endpoint: Some(ip),
+    };
+    crate::ffi_result::to_c_string(&crate::service::ios::reset_transport(add_transport_req))
+}

@@ -56,3 +56,34 @@ fn handle_log_callback(
         };
     }
 }
+
+pub fn reset_transport(
+    add_transport_req: boringtun::rpc::http_server::service::AddTransportReq,
+) -> String {
+    let collect_tx = boringtun::processor::processor_tx_generator();
+    let (callback_sender, callback_recv) =
+        crossbeam_channel::unbounded::<boringtun::rpc::http_server::ffi_callback::Event>();
+    let (ffi_sender, ffi_receiver) = crossbeam_channel::unbounded();
+    let res =
+        add_transport_req.reset_transport(ffi_sender, Some(callback_sender), collect_tx.clone());
+
+    tracing::info!("[reset_transport] res: {res:?}");
+
+    let data = ffi_receiver.recv_timeout(std::time::Duration::from_secs(6));
+    tracing::info!("[reset_transport] data: {data:?}");
+
+    let response = match data {
+        Ok(response) => response,
+        Err(e) => {
+            println!("[reset_transport] error: {e}");
+            tracing::info!("[reset_transport] error: {e}");
+
+            return Into::<crate::ffi_result::FfiResult<()>>::into(Err(
+                crate::ffi_error::Error::FfiChannelRecvFailed(e.to_string()),
+            ))
+            .to_string();
+        }
+    };
+    Into::<crate::ffi_result::FfiResult<Option<boringtun::processor::node::Node>>>::into(response)
+        .to_string()
+}
