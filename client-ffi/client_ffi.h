@@ -31,7 +31,7 @@ const char *disconnect(uint16_t port);
 
 const char *init_log(void (*log_callback)(const char *msg));
 
-const char *reset_transport(uint16_t port, const char *ip, const char *protocol);
+const char *reset_transport(uint16_t port, const char *endpoint, const char *protocol);
 
 const char *test(const char *str);
 

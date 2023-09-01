@@ -67,17 +67,17 @@ pub extern "C" fn init_log(log_callback: extern "C" fn(msg: *const c_char)) -> *
 #[no_mangle]
 pub unsafe extern "C" fn reset_transport(
     port: u16,
-    ip: *const c_char,
+    endpoint: *const c_char,
     protocol: *const c_char,
 ) -> *const c_char {
     // let rt = runtime!();
     // rt.block_on(async move { crate::service::disconnect(port).await })
-    let mut ip = match unsafe { std::ffi::CStr::from_ptr(ip) }.to_str() {
+    let mut endpoint = match unsafe { std::ffi::CStr::from_ptr(endpoint) }.to_str() {
         Err(e) => {
             let res = std::ffi::CString::new(format!("Invalid request json: {e}")).unwrap();
             return res.as_ptr();
         }
-        Ok(ip) => ip.to_string(),
+        Ok(endpoint) => endpoint.to_string(),
     };
     let mut protocol = match unsafe { std::ffi::CStr::from_ptr(protocol) }.to_str() {
         Err(e) => {
@@ -89,7 +89,7 @@ pub unsafe extern "C" fn reset_transport(
     let add_transport_req = boringtun::rpc::http_server::service::AddTransportReq {
         port,
         protocol,
-        endpoint: Some(ip),
+        endpoint: Some(endpoint),
     };
     crate::ffi_result::to_c_string(&crate::service::ios::reset_transport(add_transport_req))
 }

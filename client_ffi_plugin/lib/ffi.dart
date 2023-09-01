@@ -174,20 +174,20 @@ typedef _init_log_Dart = Pointer<ffi.Utf8> Function(
 /// C function `reset_transport`.
 Pointer<ffi.Utf8> reset_transport(
   int port,
-  Pointer<ffi.Utf8> ip,
+  Pointer<ffi.Utf8> endpoint,
   Pointer<ffi.Utf8> protocol,
 ) {
-  return _reset_transport(port, ip, protocol);
+  return _reset_transport(port, endpoint, protocol);
 }
 final _reset_transport_Dart _reset_transport = _dl.lookupFunction<_reset_transport_C, _reset_transport_Dart>('reset_transport');
 typedef _reset_transport_C = Pointer<ffi.Utf8> Function(
   Int32 port,
-  Pointer<ffi.Utf8> ip,
+  Pointer<ffi.Utf8> endpoint,
   Pointer<ffi.Utf8> protocol,
 );
 typedef _reset_transport_Dart = Pointer<ffi.Utf8> Function(
   int port,
-  Pointer<ffi.Utf8> ip,
+  Pointer<ffi.Utf8> endpoint,
   Pointer<ffi.Utf8> protocol,
 );
 
