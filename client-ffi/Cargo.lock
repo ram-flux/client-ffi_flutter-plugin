@@ -205,7 +205,7 @@ dependencies = [
 [[package]]
 name = "boringtun"
 version = "0.6.1"
-source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#225cc02383bb27e1ab7dfd1ed6b71593993352ee"
+source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#8b96a9e4886984803878fc6c32d06f0a0805edd3"
 dependencies = [
  "aead",
  "anyhow",
@@ -2215,7 +2215,7 @@ checksum = "3528ecfd12c466c6f163363caf2d02a71161dd5e1cc6ae7b34207ea2d42d81ed"
 [[package]]
 name = "tun"
 version = "0.2.0"
-source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#225cc02383bb27e1ab7dfd1ed6b71593993352ee"
+source = "git+https://github.com/ram-flux/node.git?branch=new-boringtun#8b96a9e4886984803878fc6c32d06f0a0805edd3"
 dependencies = [
  "byteorder",
  "bytes",
