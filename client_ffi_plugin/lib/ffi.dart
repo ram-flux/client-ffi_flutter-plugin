@@ -157,6 +157,14 @@ typedef _disconnect_Dart = Pointer<ffi.Utf8> Function(
   int port,
 );
 
+/// C function `down_iface`.
+Pointer<ffi.Utf8> down_iface() {
+  return _down_iface();
+}
+final _down_iface_Dart _down_iface = _dl.lookupFunction<_down_iface_C, _down_iface_Dart>('down_iface');
+typedef _down_iface_C = Pointer<ffi.Utf8> Function();
+typedef _down_iface_Dart = Pointer<ffi.Utf8> Function();
+
 /// C function `init_log`.
 Pointer<ffi.Utf8> init_log(
   Pointer<NativeFunction<Void Function(Pointer<ffi.Utf8>)>> log_callback,
@@ -217,4 +225,21 @@ typedef _test_C = Pointer<ffi.Utf8> Function(
 );
 typedef _test_Dart = Pointer<ffi.Utf8> Function(
   Pointer<ffi.Utf8> str,
+);
+
+/// C function `up_iface`.
+Pointer<ffi.Utf8> up_iface(
+  Pointer<ffi.Utf8> req,
+  int fd,
+) {
+  return _up_iface(req, fd);
+}
+final _up_iface_Dart _up_iface = _dl.lookupFunction<_up_iface_C, _up_iface_Dart>('up_iface');
+typedef _up_iface_C = Pointer<ffi.Utf8> Function(
+  Pointer<ffi.Utf8> req,
+  Int32 fd,
+);
+typedef _up_iface_Dart = Pointer<ffi.Utf8> Function(
+  Pointer<ffi.Utf8> req,
+  int fd,
 );

@@ -4,7 +4,7 @@ mod ios;
 #[cfg(target_os = "android")]
 pub static LOG_INIT: once_cell::sync::OnceCell<()> = once_cell::sync::OnceCell::new();
 
-#[cfg(target_os = "ios")]
+// #[cfg(target_os = "ios")]
 pub fn serde_req(
     req: *const std::os::raw::c_char,
     fd: std::os::raw::c_int,

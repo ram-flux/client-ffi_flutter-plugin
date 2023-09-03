@@ -50,6 +50,46 @@ pub extern "C" fn connect_to_node(
 
 #[cfg(target_os = "ios")]
 #[no_mangle]
+pub extern "C" fn up_iface(req: *const c_char, fd: std::os::raw::c_int) -> *const c_char {
+    let connect_req = match super::serde_req(req, fd) {
+        Ok(connect_req) => connect_req,
+        Err(e) => return e,
+    };
+    let collect_tx = boringtun::processor::processor_tx_generator();
+    let res = match connect_req.start_req.assign_interface(collect_tx.clone()) {
+        Ok(recv) => match recv.recv() {
+            Ok(res) => res,
+            Err(e) => {
+                let res = std::ffi::CString::new(format!("recv failed: {e}")).unwrap();
+                return res.into_raw();
+            }
+        },
+        Err(e) => {
+            let res = std::ffi::CString::new(format!("up iface failed: {e}")).unwrap();
+            return res.into_raw();
+        }
+    };
+    let res = Into::<crate::ffi_result::FfiResult<()>>::into(res).to_string();
+    crate::ffi_result::to_c_string(&res)
+}
+
+#[cfg(target_os = "ios")]
+#[no_mangle]
+pub extern "C" fn down_iface() -> *const c_char {
+    let collect_tx = boringtun::processor::processor_tx_generator();
+    let res = match boringtun::rpc::http_server::service::remove_iface(collect_tx.clone()) {
+        Ok(res) => res,
+        Err(e) => {
+            let res = std::ffi::CString::new(format!("down iface failed: {e}")).unwrap();
+            return res.into_raw();
+        }
+    };
+    let res = Into::<crate::ffi_result::FfiResult<()>>::into(res).to_string();
+    crate::ffi_result::to_c_string(&res)
+}
+
+#[cfg(target_os = "ios")]
+#[no_mangle]
 pub unsafe extern "C" fn disconnect(port: u16) -> *const c_char {
     // let rt = runtime!();
     // rt.block_on(async move { crate::service::disconnect(port).await })

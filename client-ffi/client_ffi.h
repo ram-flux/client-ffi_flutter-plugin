@@ -29,11 +29,15 @@ const char *connect_to_node(const char *req,
 
 const char *disconnect(uint16_t port);
 
+const char *down_iface(void);
+
 const char *init_log(void (*log_callback)(const char *msg));
 
 const char *reset_transport(uint16_t port, const char *endpoint, const char *protocol);
 
 const char *test(const char *str);
+
+const char *up_iface(const char *req, int fd);
 
 #ifdef __cplusplus
 } // extern "C"
